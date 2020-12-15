@@ -17,9 +17,9 @@ def BasicInfoSetting():
                 #     ]
                 # ),
                 CarouselColumn(
-                    thumbnail_image_url='https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Number_1_in_green_rounded_square.svg/200px-Number_1_in_green_rounded_square.svg.png',
-                    title='設定住家地址',
-                    text='一個模板可以有三個按鈕',
+                    # thumbnail_image_url='',
+                    title='',
+                    text='',
                     actions=[
                         # PostbackTemplateAction(
                         #     label='回傳一個訊息',

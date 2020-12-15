@@ -2,8 +2,10 @@ line-bot-sdk
 flask
 requests
 pyquery
+pandas
 imgkit 
 pyimgur
 IPython
+matplotlib
 selenium
 mysql-connector-python
