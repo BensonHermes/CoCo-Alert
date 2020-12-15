@@ -8,18 +8,19 @@ def BasicInfoSetting():
         alt_text='基本資料設定',
         template=CarouselTemplate(
             columns=[
-                # CarouselColumn(
-                #     actions=[
-                #         MessageTemplateAction(
-                #             label='全部重新設定',
-                #             text='全部重新設定'
-                #         )
-                #     ]
-                # ),
+                CarouselColumn(
+                    text='全部重新設定',
+                    actions=[
+                        MessageTemplateAction(
+                            label='全部重新設定',
+                            text='全部重新設定'
+                        )
+                    ]
+                ),
                 CarouselColumn(
                     # thumbnail_image_url='',
-                    title='',
-                    text='',
+                    # title='',
+                    text='設定住家地址',
                     actions=[
                         # PostbackTemplateAction(
                         #     label='回傳一個訊息',
@@ -35,22 +36,24 @@ def BasicInfoSetting():
                         # )
                     ]
                 ),
-                # CarouselColumn(
-                #     actions=[
-                #         MessageTemplateAction(
-                #             label='設定常用地點',
-                #             text='設定常用地點'
-                #         )
-                #     ]
-                # ),
-                # CarouselColumn(
-                #     actions=[
-                #         MessageTemplateAction(
-                #             label='設定緊急聯絡人',
-                #             text='設定緊急聯絡人'
-                #         )
-                #     ]
-                # )
+                CarouselColumn(
+                    text='設定常用地點',
+                    actions=[
+                        MessageTemplateAction(
+                            label='設定常用地點',
+                            text='設定常用地點'
+                        )
+                    ]
+                ),
+                CarouselColumn(
+                    text='設定緊急聯絡人',
+                    actions=[
+                        MessageTemplateAction(
+                            label='設定緊急聯絡人',
+                            text='設定緊急聯絡人'
+                        )
+                    ]
+                )
             ]
         )
     )
