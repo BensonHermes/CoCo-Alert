@@ -69,15 +69,24 @@ def BasicInfoSettingEntrance():
     return message
 
 def BasicInfoSetting(event, BISM):
-    print("testing here")
     # msg = event.message.text
     # if BISM.state == 'default':
     #     if '全部重新設定' in msg:
+    #         BISM.all_setting_home()
+    #         return "請利用下方的+號按鈕，輸入住家位置"
     #     elif '查看目前設定' in msg:
+    #         return "目前設定："
     #     elif '設定住家地址' in msg:
+    #         BISM.setting_home();
+    #         return "請利用下方的+號按鈕，輸入住家位置"
     #     elif '設定常用地點' in msg:
+    #         BISM.setting_often();
+    #         return "請利用下方的+號按鈕，輸入常用地點位置"
     #     elif '設定緊急聯絡人' in msg:
+    #         BISM.setting_contact();
+    #         return "請利用下方的+號按鈕，輸入緊急連絡人資訊"
     BISM.reset()
+    print("testing here")
     return "設定完成"
 
 class BasicInfoStateMachine(object):
