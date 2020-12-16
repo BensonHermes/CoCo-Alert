@@ -81,8 +81,7 @@ def handle_message(event):
 
     if '基本資料設定' in msg:
         resetAllMachine(user_id)
-        note = BasicInfoSettingEntrance()
-        message = TextSendMessage(text=note)
+        message = BasicInfoSettingEntrance()
     elif '查詢警示地點' in msg:
         resetAllMachine(user_id)
         note = '請按下方的+號按鈕，然後傳送要查詢的位置'
@@ -91,7 +90,8 @@ def handle_message(event):
         resetAllMachine(user_id)
         message = TextSendMessage(text=msg)
     elif BISMList[user_id].state != 'default' or msg in BICommands:
-        message = BasicInfoSetting(event, BISMList[user_id])
+        note = BasicInfoSetting(event, BISMList[user_id])
+        message = TextSendMessage(text=note)
     else:   # default
         message = TextSendMessage(text=msg)
 
