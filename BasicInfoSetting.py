@@ -27,6 +27,15 @@ def BasicInfoSettingEntrance():
                     ]
                 ),
                 CarouselColumn(
+                    text='設定用戶ID',
+                    actions=[
+                        MessageTemplateAction(
+                            label='點我設定',
+                            text='設定用戶ID'
+                        )
+                    ]
+                ),
+                CarouselColumn(
                     # thumbnail_image_url='',
                     # title='',
                     text='設定住家地址',
@@ -79,6 +88,9 @@ def BasicInfoSetting(event, BISM):
                 return "住家位置設置：請利用左下方的選單，輸入住家位置"
             elif '查看目前設定' in msg:
                 return "目前設定："
+            elif '設定用戶ID' in msg:
+                BISM.setting_id()
+                return "請輸入用戶ID"
             elif '設定住家地址' in msg:
                 BISM.setting_home()
                 return "請利用左下方的選單，輸入住家位置"
@@ -87,10 +99,13 @@ def BasicInfoSetting(event, BISM):
                 return "請利用左下方的選單，輸入常用地點位置"
             elif '設定緊急聯絡人' in msg:
                 BISM.setting_contact()
-                return "請利用左下方的選單，輸入緊急連絡人資訊"
+                return "請輸入緊急連絡人ID"
         elif BISM.state == 'contact':
             BISM.reset()
             return "設定完成"
+        elif BISM.state == 'all_id':
+            BISM.all_setting_home()
+            return "請利用左下方的選單，輸入住家位置"
     elif event.message.type == 'location':
         if BISM.state == 'home':
             BISM.reset()
@@ -103,21 +118,23 @@ def BasicInfoSetting(event, BISM):
             return "常用地點設置：請利用左下方的選單，輸入常用地點位置"
         elif BISM.state == 'all_often':
             BISM.setting_contact()
-            return "緊急聯絡人設置：請利用左下方的選單，輸入緊急聯絡人資訊"
+            return "緊急聯絡人設置：請輸入緊急聯絡人ID"
     BISM.reset()
     return "無法辨識"
 
 class BasicInfoStateMachine(object):
 
-    states = ['default', 'home', 'often', 'contact', 'all_home', 'all_often']
+    states = ['default', 'id', 'home', 'often', 'contact', 'all_id', 'all_home', 'all_often']
 
     def __init__(self):
         self.machine = Machine(model=self, states=BasicInfoStateMachine.states, initial='default')
 
         # add_transition(trigger, source, dest)
         self.machine.add_transition('reset', '*', 'default')
+        self.machine.add_transition('setting_id', '*', 'id')
         self.machine.add_transition('setting_home', '*', 'home')
         self.machine.add_transition('setting_often', '*', 'often')
         self.machine.add_transition('setting_contact', '*', 'contact')
-        self.machine.add_transition('all_setting_home', '*', 'all_home')
+        self.machine.add_transition('all_setting_id', '*', 'all_id')
+        self.machine.add_transition('all_setting_home', 'all_id', 'all_home')
         self.machine.add_transition('all_setting_often', 'all_home', 'all_often')

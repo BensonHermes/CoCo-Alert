@@ -60,6 +60,7 @@ BISMList = {}   # the state machine of BasicInfoSetting
 BICommands = [   # commands for basic setting    '全部重新設定',
     '全部重新設定',
     '查看目前設定',
+    '設定用戶ID',
     '設定住家地址',
     '設定常用地點',
     '設定緊急聯絡人'
