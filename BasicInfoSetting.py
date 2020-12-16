@@ -69,23 +69,24 @@ def BasicInfoSettingEntrance():
     return message
 
 def BasicInfoSetting(event, BISM):
+    print("user id", event.source.user_id)
     if event.message.type == 'text':
         msg = event.message.text
         if BISM.state == 'default':
             if '全部重新設定' in msg:
                 BISM.all_setting_home()
-                return "住家位置設置：請利用下方的+號按鈕，輸入住家位置"
+                return "住家位置設置：請利用左下方的選單，輸入住家位置"
             elif '查看目前設定' in msg:
                 return "目前設定："
             elif '設定住家地址' in msg:
                 BISM.setting_home()
-                return "請利用下方的+號按鈕，輸入住家位置"
+                return "請利用左下方的選單，輸入住家位置"
             elif '設定常用地點' in msg:
                 BISM.setting_often()
-                return "請利用下方的+號按鈕，輸入常用地點位置"
+                return "請利用左下方的選單，輸入常用地點位置"
             elif '設定緊急聯絡人' in msg:
                 BISM.setting_contact()
-                return "請利用下方的+號按鈕，輸入緊急連絡人資訊"
+                return "請利用左下方的選單，輸入緊急連絡人資訊"
         elif BISM.state == 'contact':
             BISM.reset()
             return "設定完成"
@@ -98,11 +99,12 @@ def BasicInfoSetting(event, BISM):
             return "設定完成"
         elif BISM.state == 'all_home':
             BISM.all_setting_often()
-            return "常用地點設置：請利用下方的+號按鈕，輸入常用地點位置"
+            return "常用地點設置：請利用左下方的選單，輸入常用地點位置"
         elif BISM.state == 'all_often':
             BISM.setting_contact()
-            return "緊急聯絡人設置：請利用下方的+號按鈕，輸入緊急聯絡人資訊"
+            return "緊急聯絡人設置：請利用左下方的選單，輸入緊急聯絡人資訊"
     BISM.reset()
+    return "無法辨識"
 
 class BasicInfoStateMachine(object):
 
