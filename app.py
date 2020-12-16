@@ -58,6 +58,7 @@ def callback():
 
 BISMList = {}   # the state machine of BasicInfoSetting
 BICommands = [   # commands for basic setting    '全部重新設定',
+    '全部重新設定',
     '查看目前設定',
     '設定住家地址',
     '設定常用地點',
@@ -76,6 +77,8 @@ def handle_message(event):
     if user_id not in BISMList:
         BISMList[user_id] = BasicInfoStateMachine()
 
+    print(BISMList[user_id].state)
+
     if '基本資料設定' in msg:
         resetAllMachine(user_id)
         message = BasicInfoSettingEntrance()
@@ -86,8 +89,8 @@ def handle_message(event):
     elif '開始回家' in msg:
         resetAllMachine(user_id)
         message = TextSendMessage(text=msg)
-    # elif BISMList[user_id].state != 'default' or msg in BICommands:
-    #     message = BasicInfoSetting(event, BISMList[user_id])
+    elif BISMList[user_id].state != 'default' or msg in BICommands:
+        message = BasicInfoSetting(event, BISMList[user_id])
     else:   # default
         message = TextSendMessage(text=msg)
 
