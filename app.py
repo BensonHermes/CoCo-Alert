@@ -76,20 +76,20 @@ def handle_message(event):
     if user_id not in BISMList:
         BISMList[user_id] = BasicInfoStateMachine()
 
-    # if '基本資料設定' in msg:
-    #     resetAllMachine(user_id)
-    #     message = BasicInfoSettingEntrance()
-    # elif '查詢警示地點' in msg:
-    #     resetAllMachine(user_id)
-    #     note = '請按下方的+號按鈕，然後傳送要查詢的位置'
-    #     message = TextSendMessage(text=note)
-    # elif '開始回家' in msg:
-    #     resetAllMachine(user_id)
-    #     message = TextSendMessage(text=msg)
+    if '基本資料設定' in msg:
+        resetAllMachine(user_id)
+        message = BasicInfoSettingEntrance()
+    elif '查詢警示地點' in msg:
+        resetAllMachine(user_id)
+        note = '請按下方的+號按鈕，然後傳送要查詢的位置'
+        message = TextSendMessage(text=note)
+    elif '開始回家' in msg:
+        resetAllMachine(user_id)
+        message = TextSendMessage(text=msg)
     # elif BISMList[user_id].state != 'default' or msg in BICommands:
     #     message = BasicInfoSetting(event, BISMList[user_id])
-    # else:   # default
-    #     message = TextSendMessage(text=msg)
+    else:   # default
+        message = TextSendMessage(text=msg)
 
     # elif 'newswebsite' in msg:
     #     message = imagemap_message()
@@ -104,7 +104,7 @@ def handle_message(event):
     #     a='1:輸入 『rate』 得知美國公債報價、銀行拆借利率、FED利率、Tips\n2:輸入 『worldequity』\n得知全球股票市場和指數期貨市場報價\n3:輸入 『twstock+股票代碼』\n得知該台股2019年走勢\n4:輸入 『news』\n得知台股與國際股市新聞\n5:輸入 『sectors』\n獲取美股各產業漲跌幅\n6:輸入 『commodity』 取得原物料最新報價\n7:輸入 『BIresearch』 獲取Bloomberg Intelligence研究報告\n8:輸入 『equityprimer』   獲取Bloomberg Intelligence個股研究報告\n9:輸入 『newswebsite』\n進入財經新聞網站\n10:輸入 『tvshows』\n觀看彭博社精選節目'
     #     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
 
-    # line_bot_api.reply_message(event.reply_token, message)
+    line_bot_api.reply_message(event.reply_token, message)
 
 # def doSQL(order: int, sqlStatement: str, data: list):
 #     try:
