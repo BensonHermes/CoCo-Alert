@@ -70,6 +70,7 @@ def BasicInfoSettingEntrance():
 
 def BasicInfoSetting(event, BISM):
     print("user id", event.source.user_id)
+    print("message type", event.message.type)
     if event.message.type == 'text':
         msg = event.message.text
         if BISM.state == 'default':
