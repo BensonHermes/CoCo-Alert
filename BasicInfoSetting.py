@@ -101,8 +101,6 @@ def BasicInfoSetting(event, BISM):
         BISM.setting_contact()
         return "緊急聯絡人設置：請利用下方的+號按鈕，輸入緊急聯絡人資訊"
     BISM.reset()
-    print("testing here")
-    return "設定完成"
 
 class BasicInfoStateMachine(object):
 

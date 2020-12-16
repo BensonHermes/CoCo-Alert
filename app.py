@@ -110,6 +110,11 @@ def handle_message(event):
 
     line_bot_api.reply_message(event.reply_token, message)
 
+@handler.add(MessageEvent, message=LocationMessage)
+def handle_location(event):
+    if BISMList[user_id].state != 'default':
+        note = BasicInfoSetting(event, BISMList[user_id])
+        message = TextSendMessage(text=note)
 # def doSQL(order: int, sqlStatement: str, data: list):
 #     try:
 #         # 連接 MySQL/MariaDB 資料庫
