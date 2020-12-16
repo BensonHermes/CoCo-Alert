@@ -84,8 +84,8 @@ def BasicInfoSetting(event, BISM):
         msg = event.message.text
         if BISM.state == 'default':
             if '全部重新設定' in msg:
-                BISM.all_setting_home()
-                return "住家位置設置：請利用左下方的選單，輸入住家位置"
+                BISM.all_setting_id()
+                return "用戶ID設置：請輸入用戶ID"
             elif '查看目前設定' in msg:
                 return "目前設定："
             elif '設定用戶ID' in msg:
@@ -105,7 +105,7 @@ def BasicInfoSetting(event, BISM):
             return "設定完成"
         elif BISM.state == 'all_id':
             BISM.all_setting_home()
-            return "請利用左下方的選單，輸入住家位置"
+            return "住家設置：請利用左下方的選單，輸入住家位置"
     elif event.message.type == 'location':
         if BISM.state == 'home':
             BISM.reset()
