@@ -2,6 +2,7 @@ from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import (InvalidSignatureError)
 from linebot.models import *
 from transitions import Machine
+from db import *
 
 def BasicInfoSettingEntrance():
     message = TemplateSendMessage(
@@ -87,7 +88,7 @@ def BasicInfoSetting(event, BISM):
                 BISM.all_setting_id()
                 return "用戶ID設置：請輸入用戶ID"
             elif '查看目前設定' in msg:
-                return "目前設定："
+                return getCurrentSetting()
             elif '設定用戶ID' in msg:
                 BISM.setting_id()
                 return "請輸入用戶ID"
