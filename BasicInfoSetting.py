@@ -69,21 +69,28 @@ def BasicInfoSettingEntrance():
     return message
 
 def BasicInfoSetting(event, BISM):
-    BISM.sleep()
+    print("testing here")
+    # msg = event.message.text
+    # if BISM.state == 'default':
+    #     if '全部重新設定' in msg:
+    #     elif '查看目前設定' in msg:
+    #     elif '設定住家地址' in msg:
+    #     elif '設定常用地點' in msg:
+    #     elif '設定緊急聯絡人' in msg:
+    BISM.reset()
     return "設定完成"
 
 class BasicInfoStateMachine(object):
 
-    states = ['default', 'waiting', 'home', 'often', 'contact', 'all_home', 'all_often']
+    states = ['default', 'home', 'often', 'contact', 'all_home', 'all_often']
 
     def __init__(self):
         self.machine = Machine(model=self, states=BasicInfoStateMachine.states, initial='default')
 
         # add_transition(trigger, source, dest)
-        self.machine.add_transition('sleep', '*', 'default')
-        self.machine.add_transition('start', '*', 'waiting')
-        self.machine.add_transition('setting_home', 'waiting', 'home')
-        self.machine.add_transition('setting_often', 'waiting', 'often')
+        self.machine.add_transition('reset', '*', 'default')
+        self.machine.add_transition('setting_home', '*', 'home')
+        self.machine.add_transition('setting_often', '*', 'often')
         self.machine.add_transition('setting_contact', '*', 'contact')
         self.machine.add_transition('all_setting_home', '*', 'all_home')
         self.machine.add_transition('all_setting_often', 'all_home', 'all_often')

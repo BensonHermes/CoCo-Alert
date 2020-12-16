@@ -57,9 +57,15 @@ def callback():
 
 
 BISMList = {}   # the state machine of BasicInfoSetting
+BICommands = [   # commands for basic setting    '全部重新設定',
+    '查看目前設定',
+    '設定住家地址',
+    '設定常用地點',
+    '設定緊急聯絡人'
+]
 
 def resetAllMachine(user_id):
-    BISMList[user_id].sleep()
+    BISMList[user_id].reset()
     
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
@@ -81,8 +87,9 @@ def handle_message(event):
     elif '開始回家' in msg:
         resetAllMachine(user_id)
         message = TextSendMessage(text=msg)
-    elif BISMList[user_id].state != 'default':
+    elif BISMList[user_id].state != 'default' or msg in BICommands:
         message = BasicInfoSetting(event, BISMList[user_id])
+
     # elif 'newswebsite' in msg:
     #     message = imagemap_message()
     #     line_bot_api.reply_message(event.reply_token, message)
@@ -100,43 +107,43 @@ def handle_message(event):
 
     line_bot_api.reply_message(event.reply_token, message)
 
-def doSQL(order: int, sqlStatement: str, data: list):
-    try:
-        # 連接 MySQL/MariaDB 資料庫
-        connection = mysql.connector.connect(
-            host='140.119.19.73',          # 主機名稱
-            port='9306',
-            database='TG06', # 資料庫名稱
-            user='TG06',        # 帳號
-            password='i8p3q6')  # 密碼
+# def doSQL(order: int, sqlStatement: str, data: list):
+#     try:
+#         # 連接 MySQL/MariaDB 資料庫
+#         connection = mysql.connector.connect(
+#             host='140.119.19.73',          # 主機名稱
+#             port='9306',
+#             database='TG06', # 資料庫名稱
+#             user='TG06',        # 帳號
+#             password='i8p3q6')  # 密碼
         
-        if connection.is_connected():
-            print("database version:", connection.get_server_info())
+#         if connection.is_connected():
+#             print("database version:", connection.get_server_info())
 
-        # 查詢資料庫
-        cursor = connection.cursor()
-        cursor.execute("SELECT DATABASE();")
-        record = cursor.fetchone()
-        print("current database:", record)
-        # if(order==0):
-        #     cursor.execute(sqlStatement)
-        # 列出查詢的資料'
-            # records = cursor.fetchall()
-            # return records
-            # for (Course_id, Course_name) in cursor:
-            #     print("Course_id: %s, Course_name: %s" % (Course_id, Course_name))
-        # else:
-        #     cursor.execute(sqlStatement,data)
-        #     connection.commit()
+#         # 查詢資料庫
+#         cursor = connection.cursor()
+#         cursor.execute("SELECT DATABASE();")
+#         record = cursor.fetchone()
+#         print("current database:", record)
+#         # if(order==0):
+#         #     cursor.execute(sqlStatement)
+#         # 列出查詢的資料'
+#             # records = cursor.fetchall()
+#             # return records
+#             # for (Course_id, Course_name) in cursor:
+#             #     print("Course_id: %s, Course_name: %s" % (Course_id, Course_name))
+#         # else:
+#         #     cursor.execute(sqlStatement,data)
+#         #     connection.commit()
 
-    except Error as e:
-        print("資料庫連接失敗：", e)
+#     except Error as e:
+#         print("資料庫連接失敗：", e)
 
-    finally:
-        if (connection.is_connected()):
-            cursor.close()
-            connection.close()
-            print("資料庫連線已關閉")
+#     finally:
+#         if (connection.is_connected()):
+#             cursor.close()
+#             connection.close()
+#             print("資料庫連線已關閉")
 
 
 import os
