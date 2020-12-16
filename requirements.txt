@@ -7,3 +7,4 @@ pyimgur
 IPython
 selenium
 mysql-connector-python
+transitions
