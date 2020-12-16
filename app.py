@@ -81,7 +81,8 @@ def handle_message(event):
 
     if '基本資料設定' in msg:
         resetAllMachine(user_id)
-        message = BasicInfoSettingEntrance()
+        note = BasicInfoSettingEntrance()
+        message = TextSendMessage(text=note)
     elif '查詢警示地點' in msg:
         resetAllMachine(user_id)
         note = '請按下方的+號按鈕，然後傳送要查詢的位置'
