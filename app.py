@@ -22,8 +22,9 @@ from linebot.models import *
 
 #from selenium import webdriver
 from message import *
-from new import *
-from Function import *
+# from new import *
+# from Function import *
+from BasicInfoSetting import *
 
 # from rate1 import *
 # from twStock import *
