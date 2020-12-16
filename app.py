@@ -78,7 +78,6 @@ def handle_message(event):
 
     if '基本資料設定' in msg:
         resetAllMachine(user_id)
-        BISMList[user_id].start()
         message = BasicInfoSettingEntrance()
     elif '查詢警示地點' in msg:
         resetAllMachine(user_id)
