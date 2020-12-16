@@ -112,6 +112,7 @@ def handle_message(event):
 
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location(event):
+    user_id = event.source.user_id
     if BISMList[user_id].state != 'default':
         note = BasicInfoSetting(event, BISMList[user_id])
         message = TextSendMessage(text=note)
