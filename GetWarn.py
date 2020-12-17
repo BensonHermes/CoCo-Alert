@@ -1,5 +1,4 @@
 from transitions import Machine
-import folium
 
 def GetWarn(event):
    return "在回家的路上可能會經過的危險地點如下："
