@@ -20,18 +20,11 @@ from linebot.exceptions import (
 )
 from linebot.models import *
 
-#from selenium import webdriver
 from message import *
-# from new import *
-# from Function import *
 from BasicInfoSetting import *
+from GetWarn import *
+from ReturnHome import *
 
-# from rate1 import *
-# from twStock import *
-# from bbi_selenium import *
-# from selenium import webdriver
-# from pyquery import PyQuery as pq
-#======這裡是呼叫的檔案內容=====
 
 app = Flask(__name__)
 # Channel Access Token
@@ -65,9 +58,11 @@ BICommands = [   # commands for basic setting    '全部重新設定',
     '設定常用地點',
     '設定緊急聯絡人'
 ]
+GWSMList = {}   # the state machine of GetWarn
 
 def resetAllMachine(user_id):
     BISMList[user_id].reset()
+    GWSMList[user_id].reset()
     
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
@@ -77,19 +72,20 @@ def handle_message(event):
     user_id = event.source.user_id
     if user_id not in BISMList:
         BISMList[user_id] = BasicInfoStateMachine()
-
-    print(BISMList[user_id].state)
+    if user_id not in GWSMList:
+        GWSMList[user_id] = GetWarnStateMachine()
 
     if '基本資料設定' in msg:
         resetAllMachine(user_id)
         message = BasicInfoSettingEntrance()
     elif '查詢警示地點' in msg:
         resetAllMachine(user_id)
-        note = '請按下方的+號按鈕，然後傳送要查詢的位置'
+        GWSMList[user_id].locate()
+        note = '請利用左下方的選單，傳送目前的位置'
         message = TextSendMessage(text=note)
     elif '開始回家' in msg:
         resetAllMachine(user_id)
-        message = TextSendMessage(text=msg)
+        message = StartReturnHome()
     elif BISMList[user_id].state != 'default' or msg in BICommands:
         note = BasicInfoSetting(event, BISMList[user_id])
         message = TextSendMessage(text=note)
@@ -114,10 +110,18 @@ def handle_message(event):
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location(event):
     user_id = event.source.user_id
+    message = ""
     if BISMList[user_id].state != 'default':
         note = BasicInfoSetting(event, BISMList[user_id])
         message = TextSendMessage(text=note)
-        line_bot_api.reply_message(event.reply_token, message)
+    elif GWSMList[user_id].state != 'default':
+        note = GetWarn(event)
+        message = TextSendMessage(text=note)
+        GWSMList[user_id].reset()
+
+
+    line_bot_api.reply_message(event.reply_token, message)
+
 # def doSQL(order: int, sqlStatement: str, data: list):
 #     try:
 #         # 連接 MySQL/MariaDB 資料庫

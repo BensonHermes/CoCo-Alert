@@ -6,4 +6,4 @@ def getCurrentSetting(user_id):
    result += '\n常用位置：'
    result += '\n緊急聯絡人：'
 
-   retur result
+   return result
