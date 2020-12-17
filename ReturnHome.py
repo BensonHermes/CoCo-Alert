@@ -7,11 +7,12 @@ def StartReturnHome():
             title = '回家時間',
             text = '請選擇到家的時間',
             actions = [
-                DatetimepickerTemplateAction(
-                    label = '選擇時間',
-                    data = 'return_home_time',
-                    mode = 'time'
-                )
+                {
+                    'type': 'datetimepicker',
+                    'label': '選擇時間',
+                    'data': 'return_home_time',
+                    'mode': 'time'
+                }
             ]
         )
     )
