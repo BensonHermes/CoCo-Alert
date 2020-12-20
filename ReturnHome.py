@@ -1,26 +1,9 @@
 from linebot.models import *
-import transitions
+from transitions import Machine
 from datetime import datetime, timedelta
 
-# def StartReturnHome():
-#     message = TemplateSendMessage(
-#         alt_text = '設置出發點',
-#         template = ButtonsTemplate(
-#             title = '出發點',
-#             text = '設置返家的出發點',
-#             actions = [
-#                 MessageTemplateAction(
-#                     label='使用常用位置',
-#                     text='使用常用位置'
-#                 ),
-#                 MessageTemplateAction(
-#                     label='選擇位置',
-#                     text='選擇位置'
-#                 )
-#             ]
-#         )
-#     )
-#     return message
+def StartReturnHome(user_id):
+
 
 def SetReturnHomeTime():
     message = TemplateSendMessage(
@@ -64,3 +47,23 @@ class ReturnHomeMachine(object):
         self.machine.add_transition('start_counting', 'set_time', 'counting')
         self.machine.add_transition('warn', 'counting', 'waning')
 
+
+# def StartReturnHome():
+#     message = TemplateSendMessage(
+#         alt_text = '設置出發點',
+#         template = ButtonsTemplate(
+#             title = '出發點',
+#             text = '設置返家的出發點',
+#             actions = [
+#                 MessageTemplateAction(
+#                     label='使用常用位置',
+#                     text='使用常用位置'
+#                 ),
+#                 MessageTemplateAction(
+#                     label='選擇位置',
+#                     text='選擇位置'
+#                 )
+#             ]
+#         )
+#     )
+#     return message
