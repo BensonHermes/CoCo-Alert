@@ -8,6 +8,9 @@ def ReturnHome(event, RHSM):
     # set target time
     target_time = parsetime(event.postback.params['time'])
     RHSM.time = target_time
+    note = target_time.strftime("回家時間：%Y/%m/%d %H:%M")
+    message = TextSendMessage(text=note)
+    line_bot_api.reply_message(event.reply_token, message)
     RHSM.start_counting()
 
     current = datetime.now()
@@ -40,7 +43,9 @@ def parsetime(data):
     dateformat = "%Y/%m/%d"
     date = current.strftime(dateformat)
     result = datetime.strptime(date+' '+data, dateformat+' %H:%M')
+    print(result, current)
     if result < current:
+        print("here")
         result = result + timedelta(days=1)
     return result
         
