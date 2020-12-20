@@ -2,7 +2,9 @@ from linebot.models import *
 from transitions import Machine
 from datetime import datetime, timedelta
 
-def StartReturnHome(user_id):
+def StartReturnHome(RHSM):
+    current = datetime.now()
+    # while 
     return
 
 
@@ -37,10 +39,10 @@ def parsetime(data):
 class ReturnHomeMachine(object):
 
     states = ['default', 'set_time', 'counting', 'warning']
-    time = ''
 
     def __init__(self):
         self.machine = Machine(model=self, states=ReturnHomeMachine.states, initial='default')
+        self.time = ''
 
         # add_transition(trigger, source, dest)
         self.machine.add_transition('reset', '*', 'default')
