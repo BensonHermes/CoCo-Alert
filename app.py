@@ -127,8 +127,7 @@ def handle_postback(event):
     if RHSMList[user_id].state == 'set_time':
         RHSMList[user_id].time = parsetime(event.postback.params.time)
         RHSMList[user_id].start_counting()
-        # for debug
-        note = datetime.strftime("%Y/%m/%d %H:%M", RHSMList[user_id].time)
+        note = datetime.strftime("回家時間：%Y/%m/%d %H:%M", RHSMList[user_id].time)
         message = TextSendMessage(text=note)
         line_bot_api.reply_message(event.reply_token, message)
 
