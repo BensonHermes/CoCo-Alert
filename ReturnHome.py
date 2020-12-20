@@ -3,6 +3,7 @@ from transitions import Machine
 from datetime import datetime, timedelta
 
 def StartReturnHome(user_id):
+    return
 
 
 def SetReturnHomeTime():
