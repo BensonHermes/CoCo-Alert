@@ -13,10 +13,10 @@ def ReturnHome(event, RHSM):
     line_bot_api.reply_message(event.reply_token, message)
     RHSM.start_counting()
 
-    current = datetime.now()
+    current = datetime.fromtimestamp(time.localtime())
     while RHSM.state == 'counting' and current < target_time:
         time.sleep(10)
-        current = datetime.now()
+        current = datetime.fromtimestamp(time.localtime())
 
     if RHSM.state == 'default':
         return '回家行程取消'
@@ -43,15 +43,14 @@ def SetReturnHomeTime():
     return message
 
 def parsetime(data):
-    current = time.localtime()
+    current = datetime.fromtimestamp(time.localtime())
     dateformat = "%Y/%m/%d"
-    # date = current.strftime(dateformat)
-    date = time.strftime(dateformat, current)
+    date = current.strftime(dateformat)
     result = datetime.strptime(date+' '+data, dateformat+' %H:%M')
     print(result, current)
     if result < current:
         print("here")
-        result.day += 1
+        result = result + timedelta(days=1)
     return result
         
 

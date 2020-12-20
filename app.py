@@ -125,11 +125,10 @@ def handle_postback(event):
     user_id = event.source.user_id
     if RHSMList[user_id].state == 'set_time':
         # ReturnHome(event, RHSMList[user_id])
-        RHSMList[user_id].time = parsetime(event.postback.params['time'])
+        RHSMList[user_id].time = parsetim``(event.postback.params['time'])
         print(RHSMList[user_id].time)
         RHSMList[user_id].start_counting()
-        # note = RHSMList[user_id].time.strftime("回家時間：%Y/%m/%d %H:%M")
-        note = time.strftime("回家時間：%Y/%m/%d %H:%M", RHSMList[user_id].time)
+        note = RHSMList[user_id].time.strftime("回家時間：%Y/%m/%d %H:%M")
         message = TextSendMessage(text=note)
         line_bot_api.reply_message(event.reply_token, message)
 
