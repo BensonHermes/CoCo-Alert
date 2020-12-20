@@ -59,10 +59,22 @@ BICommands = [   # commands for basic setting    '全部重新設定',
     '設定緊急聯絡人'
 ]
 GWSMList = {}   # the state machine of GetWarn
+RHSMList = {}
+RHCommands = [
+]
 
 def resetAllMachine(user_id):
     BISMList[user_id].reset()
     GWSMList[user_id].reset()
+    RHSMList[user_id].reset()
+
+def checkStateMachine(user_id):
+    if user_id not in BISMList:
+        BISMList[user_id] = BasicInfoStateMachine()
+    if user_id not in GWSMList:
+        GWSMList[user_id] = GetWarnStateMachine()
+    if user_id not in RHSMList:
+        RHSMList[user_id] = ReturnHomeMachine()
     
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
@@ -70,10 +82,7 @@ def handle_message(event):
     message = ""
     msg = event.message.text
     user_id = event.source.user_id
-    if user_id not in BISMList:
-        BISMList[user_id] = BasicInfoStateMachine()
-    if user_id not in GWSMList:
-        GWSMList[user_id] = GetWarnStateMachine()
+    checkStateMachine(user_id)
 
     if '基本資料設定' in msg:
         resetAllMachine(user_id)
@@ -85,25 +94,15 @@ def handle_message(event):
         message = TextSendMessage(text=note)
     elif '開始回家' in msg:
         resetAllMachine(user_id)
-        message = StartReturnHome()
+        RHSMList[user_id].set_time()
+        message = SetReturnHomeTime()
     elif BISMList[user_id].state != 'default' or msg in BICommands:
         note = BasicInfoSetting(event, BISMList[user_id])
         message = TextSendMessage(text=note)
+    elif RHSMList[user_id].state != 'default' or msg in RHCommands:
+        message = ReturnHomeSetting(event, RHSMList[user_id])
     else:   # default
         message = TextSendMessage(text=msg)
-
-    # elif 'newswebsite' in msg:
-    #     message = imagemap_message()
-    #     line_bot_api.reply_message(event.reply_token, message)
-    # elif '旋轉木馬' in msg:
-    #     message = Carousel_Template()
-    #     line_bot_api.reply_message(event.reply_token, message)
-    # elif '圖片畫廊' in msg:
-    #     message = test()
-    #     line_bot_api.reply_message(event.reply_token, message)
-    # elif '功能' in msg:
-    #     a='1:輸入 『rate』 得知美國公債報價、銀行拆借利率、FED利率、Tips\n2:輸入 『worldequity』\n得知全球股票市場和指數期貨市場報價\n3:輸入 『twstock+股票代碼』\n得知該台股2019年走勢\n4:輸入 『news』\n得知台股與國際股市新聞\n5:輸入 『sectors』\n獲取美股各產業漲跌幅\n6:輸入 『commodity』 取得原物料最新報價\n7:輸入 『BIresearch』 獲取Bloomberg Intelligence研究報告\n8:輸入 『equityprimer』   獲取Bloomberg Intelligence個股研究報告\n9:輸入 『newswebsite』\n進入財經新聞網站\n10:輸入 『tvshows』\n觀看彭博社精選節目'
-    #     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
 
     line_bot_api.reply_message(event.reply_token, message)
 
@@ -118,9 +117,11 @@ def handle_location(event):
         note = GetWarn(event)
         message = TextSendMessage(text=note)
         GWSMList[user_id].reset()
-
-
+    else:
+        return
     line_bot_api.reply_message(event.reply_token, message)
+
+
 
 # def doSQL(order: int, sqlStatement: str, data: list):
 #     try:
