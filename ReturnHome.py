@@ -7,16 +7,17 @@ import time
 def ReturnHome(event, RHSM):
     # set target time
     target_time = parsetime(event.postback.params['time'])
+    target_time = target_time.astimezone(timezone(timedelta(hours=8)))
     RHSM.time = target_time
     note = target_time.strftime("回家時間：%Y/%m/%d %H:%M")
     message = TextSendMessage(text=note)
     line_bot_api.reply_message(event.reply_token, message)
     RHSM.start_counting()
 
-    current = datetime.today()
+    current = getNow()
     while RHSM.state == 'counting' and current < target_time:
         time.sleep(10)
-        current = datetime.today()
+        current = getNow()
 
     if RHSM.state == 'default':
         return '回家行程取消'
@@ -27,10 +28,15 @@ def ReturnHome(event, RHSM):
         return '歡迎回家:)'
 
     target_time = target_time + timedelta(minutes=5)
-    current = datetime.today()
-    # while RHSM.state == 'warning' and current
+    current = getNow()
+    while RHSM.state == 'warning' and current < target_time:
+        time.sleep(10)
+        current = getNow()
 
-    return
+    if RHSM.state == 'default':
+        return '歡迎回家:)'
+
+    return '呼叫緊急聯絡人'
 
 
 def SetReturnHomeTime():
@@ -62,6 +68,7 @@ def parsetime(data):
     dateformat = "%Y/%m/%d"
     date = current.strftime(dateformat)
     result = datetime.strptime(date+' '+data, dateformat+' %H:%M')
+    result = result.replace(tzinfo=timezone(timedelta(hours=8)))
     print(result, current)
     if result < current:
         print("here")
