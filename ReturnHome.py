@@ -4,7 +4,11 @@ from transitions import Machine
 from datetime import datetime, timedelta
 import time
 
-def StartReturnHome(RHSM):
+def ReturnHome(event, RHSM):
+    # set target time
+    target_time = parsetime(event.postback.params['time'])
+    RHSMList[user_id].time = target_time
+
     current = datetime.now()
     while RHSM.state == 'counting' and current < RHSM.time:
         time.sleep(10)
@@ -36,7 +40,7 @@ def parsetime(data):
     date = current.strftime(dateformat)
     result = datetime.strptime(date+' '+data, dateformat+' %H:%M')
     if result < current:
-        result = result + timedelta(day=1)
+        result = result + timedelta(days=1)
     return result
         
 
