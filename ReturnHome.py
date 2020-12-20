@@ -23,6 +23,9 @@ def ReturnHome(event, RHSM):
 
     RHSM.warn()
     GiveWarn()
+    if RHSM.state == 'default':
+        return '歡迎回家:)'
+    target_time = target_time + timedelta(minutes=5)
 
     return
 
