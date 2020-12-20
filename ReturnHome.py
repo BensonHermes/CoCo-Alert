@@ -17,6 +17,10 @@ def ReturnHome(event, RHSM):
     while RHSM.state == 'counting' and current < target_time:
         time.sleep(10)
         current = datetime.now()
+
+    if RHSM.state == 'default':
+        return '回家行程取消'
+
     return
 
 
@@ -39,14 +43,15 @@ def SetReturnHomeTime():
     return message
 
 def parsetime(data):
-    current = datetime.now()
+    current = time.localtime()
     dateformat = "%Y/%m/%d"
-    date = current.strftime(dateformat)
+    # date = current.strftime(dateformat)
+    date = time.strftime(dateformat, current)
     result = datetime.strptime(date+' '+data, dateformat+' %H:%M')
     print(result, current)
     if result < current:
         print("here")
-        result = result + timedelta(days=1)
+        result.day += 1
     return result
         
 
