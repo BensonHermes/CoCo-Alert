@@ -114,8 +114,7 @@ def handle_location(event):
         note = BasicInfoSetting(event, BISMList[user_id])
         message = TextSendMessage(text=note)
     elif GWSMList[user_id].state != 'default':
-        note = GetWarn(event)
-        message = TextSendMessage(text=note)
+        message = TextSendMessage(text=GetWarn(event))
         GWSMList[user_id].reset()
     else:
         return
@@ -126,6 +125,7 @@ def handle_postback(event):
     user_id = event.source.user_id
     if RHSMList[user_id].state == 'set_time':
         RHSMList[user_id].time = parsetime(event.postback.params['time'])
+        print(RHSMList[user_id].time)
         RHSMList[user_id].start_counting()
         note = datetime.strftime("回家時間：%Y/%m/%d %H:%M", RHSMList[user_id].time)
         message = TextSendMessage(text=note)
