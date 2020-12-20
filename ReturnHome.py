@@ -1,7 +1,7 @@
 from linebot.models import *
 from linebot import LineBotApi
 from transitions import Machine
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import time
 
 def ReturnHome(event, RHSM):
@@ -25,7 +25,10 @@ def ReturnHome(event, RHSM):
     GiveWarn()
     if RHSM.state == 'default':
         return '歡迎回家:)'
+
     target_time = target_time + timedelta(minutes=5)
+    current = datetime.today()
+    while RHSM.state == 'warning' and current
 
     return
 
@@ -51,9 +54,11 @@ def SetReturnHomeTime():
 def GiveWarn():
     return
 
+def getNow():
+    return datetime.utcnow().astimezone(timezone(timedelta(hours=8)))
 
 def parsetime(data):
-    current = datetime.today()
+    current = getNow()
     dateformat = "%Y/%m/%d"
     date = current.strftime(dateformat)
     result = datetime.strptime(date+' '+data, dateformat+' %H:%M')
