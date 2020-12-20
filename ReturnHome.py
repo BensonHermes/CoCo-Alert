@@ -1,4 +1,5 @@
 from linebot.models import *
+from datetime import datetime, timedelta
 
 # def StartReturnHome():
 #     message = TemplateSendMessage(
@@ -38,9 +39,20 @@ def SetReturnHomeTime():
     )
     return message
 
+def parsetime(data):
+    current = datetime.now()
+    dateformat = "%Y/%m/%d"
+    date = datetime.strftime(dateformat, current)
+    result = datetime.strptime(date+' '+data, dateformat+' %H:%M')
+    if result < current:
+        result = result + timedelta(day=1)
+    return result
+        
+
 class ReturnHomeMachine(object):
 
     states = ['default', 'set_time', 'counting', 'warning']
+    time = ''
 
     def __init__(self):
         self.machine = Machine(model=self, states=ReturnHomeMachine.states, initial='default')
@@ -50,3 +62,4 @@ class ReturnHomeMachine(object):
         self.machine.add_transition('set_time', '*', 'set_time')
         self.machine.add_transition('start_counting', 'set_time', 'counting')
         self.machine.add_transition('warn', 'counting', 'waning')
+
