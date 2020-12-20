@@ -7,10 +7,11 @@ import time
 def ReturnHome(event, RHSM):
     # set target time
     target_time = parsetime(event.postback.params['time'])
-    RHSMList[user_id].time = target_time
+    RHSM.time = target_time
+    RHSM.start_counting()
 
     current = datetime.now()
-    while RHSM.state == 'counting' and current < RHSM.time:
+    while RHSM.state == 'counting' and current < target_time:
         time.sleep(10)
         current = datetime.now()
     return
