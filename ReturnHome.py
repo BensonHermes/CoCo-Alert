@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 def StartReturnHome(RHSM):
     current = datetime.now()
-    # while RHSM.state == 'counting' and current < RHSM.time:
+    while RHSM.state == 'counting' and current < RHSM.time:
     return
 
 
@@ -49,9 +49,6 @@ class ReturnHomeMachine(object):
         self.machine.add_transition('set_time', '*', 'set_time')
         self.machine.add_transition('start_counting', 'set_time', 'counting')
         self.machine.add_transition('warn', 'counting', 'waning')
-    
-    def settime(time):
-        self.time = time
 
 
 # def StartReturnHome():

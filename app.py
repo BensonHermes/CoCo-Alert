@@ -125,7 +125,7 @@ def handle_location(event):
 def handle_postback(event):
     user_id = event.source.user_id
     if RHSMList[user_id].state == 'set_time':
-        RHSMList[user_id].settime(parsetime(event.postback.params.time))
+        RHSMList[user_id].time = parsetime(event.postback.params[time])
         RHSMList[user_id].start_counting()
         note = datetime.strftime("回家時間：%Y/%m/%d %H:%M", RHSMList[user_id].time)
         message = TextSendMessage(text=note)
