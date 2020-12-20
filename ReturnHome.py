@@ -1,10 +1,13 @@
 from linebot.models import *
 from transitions import Machine
 from datetime import datetime, timedelta
+import time
 
 def StartReturnHome(RHSM):
     current = datetime.now()
     while RHSM.state == 'counting' and current < RHSM.time:
+        time.sleep(10)
+        current = datetime.now()
     return
 
 
