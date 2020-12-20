@@ -28,7 +28,7 @@ def ReturnHome(event, RHSM):
 
     target_time = target_time + timedelta(minutes=5)
     current = datetime.today()
-    while RHSM.state == 'warning' and current
+    # while RHSM.state == 'warning' and current
 
     return
 
