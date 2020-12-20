@@ -1,4 +1,5 @@
 from linebot.models import *
+from linebot import LineBotApi
 from transitions import Machine
 from datetime import datetime, timedelta
 import time
@@ -32,7 +33,7 @@ def SetReturnHomeTime():
 def parsetime(data):
     current = datetime.now()
     dateformat = "%Y/%m/%d"
-    date = datetime.strftime(dateformat, current)
+    date = current.strftime(dateformat)
     result = datetime.strptime(date+' '+data, dateformat+' %H:%M')
     if result < current:
         result = result + timedelta(day=1)
