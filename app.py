@@ -128,11 +128,15 @@ def handle_postback(event):
         RHSMList[user_id].time = parsetime(event.postback.params['time'])
         print(RHSMList[user_id].time)
         RHSMList[user_id].start_counting()
-        note = RHSMList[user_id].time.strftime("回家時間：%Y/%m/%d %H:%M")
+        note = RHSMList[user_id].time.strftime('回家時間：%Y/%m/%d %H:%M')
         message = TextSendMessage(text=note)
         line_bot_api.reply_message(event.reply_token, message)
+    elif RHSMList[user_id].state != 'default' and '行程結束' in event.postback.data:
+        RHSMList[user_id].reset()
+        message = TextSendMessage(text='請稍候...')
+        line_bot_api.reply_message(event.reply_token, message)
 
-# def doSQL(order: int, sqlStatement: str, data: list):
+# def doSQL(order: int, sqlStatement: str, data: list)
 #     try:
 #         # 連接 MySQL/MariaDB 資料庫
 #         connection = mysql.connector.connect(

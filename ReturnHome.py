@@ -36,6 +36,7 @@ def ReturnHome(event, RHSM):
     if RHSM.state == 'default':
         return '歡迎回家:)'
 
+    WarnContact()
     return '呼叫緊急聯絡人'
 
 
@@ -60,6 +61,9 @@ def SetReturnHomeTime():
 def GiveWarn():
     return
 
+def WarnContact():
+    return
+
 def getNow():
     return datetime.utcnow().astimezone(timezone(timedelta(hours=8)))
 
@@ -69,9 +73,7 @@ def parsetime(data):
     date = current.strftime(dateformat)
     result = datetime.strptime(date+' '+data, dateformat+' %H:%M')
     result = result.replace(tzinfo=timezone(timedelta(hours=8)))
-    print(result, current)
     if result < current:
-        print("here")
         result = result + timedelta(days=1)
     return result
         
