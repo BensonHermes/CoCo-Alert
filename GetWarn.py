@@ -1,10 +1,10 @@
+from linebot.models import FlexSendMessage
 from transitions import Machine
 
 def GetWarn(event):
-    message = {
-        'type': 'flex',
-        'alt_text': '警示地點查詢結果',
-        'contents': {
+    message = FlexSendMessage(
+        alt_text = '警示地點查詢結果',
+        contents = {
             'type': 'bubble',
             'body': {
                 'type': 'box',
@@ -25,7 +25,7 @@ def GetWarn(event):
                 }
             }
         }
-    }
+    )
     return message
 
 class GetWarnStateMachine(object):
