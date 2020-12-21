@@ -6,7 +6,7 @@ def GetWarn(event):
         alt_text = '警示地點查詢結果',
         contents = {
             'type': 'bubble',
-            'body': {
+            'hero': {
                 'type': 'box',
                 'layout': 'vertical',
                 'contents': [
