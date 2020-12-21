@@ -1,31 +1,11 @@
 from linebot.models import FlexSendMessage
 from transitions import Machine
+from flex import *
 
 def GetWarn(event):
     message = FlexSendMessage(
         alt_text = '警示地點查詢結果',
-        contents = {
-            'type': 'bubble',
-            'hero': {
-                'type': 'box',
-                'layout': 'vertical',
-                'contents': [
-                    {
-                        'type': 'text',
-                        'text': '在回家的路上可能會經過的危險地點如下：'
-                    }
-                ]
-            },
-            'body': {
-                'type':'button',
-                'layout': 'vertical',
-                'action': {
-                    'type': 'uri',
-                    'label': '打開地圖',
-                    'uri': 'https://TeresaChou.github.io/WarnMap'
-                }
-            }
-        }
+        contents = getWarnMapFlex()
     )
     return message
 
