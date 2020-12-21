@@ -20,8 +20,7 @@ def getWarnMapFlex():
                            "type": "text",
                            "text": "在回家的路上可能會經過的危險地點如下：",
                            "wrap": True,
-                           "color": "#666666",
-                           "size": "sm",
+                           "color": "#000000",
                            "flex": 5
                         }
                      ]
