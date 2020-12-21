@@ -18,6 +18,7 @@ def GetWarn(event):
             },
             'body': {
                 'type':'button',
+                'layout': 'vertical',
                 'action': {
                     'type': 'uri',
                     'label': '打開地圖',
