@@ -7,7 +7,7 @@ def GetWarn(event, GWSM):
     longitude = event.message.longitude
     message = FlexSendMessage(
         alt_text = '警示地點查詢結果',
-        contents = getWarnMapFlex(latitude, longitude)
+        contents = getWarnMapFlex(latitude, longitude, 0, 0)
     )
     return message
 
