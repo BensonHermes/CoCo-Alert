@@ -1,11 +1,11 @@
 def getWarnMapFlex(latitude1, longitude1, latitude2, longitude2):
    pos = "?"
    if latitude1 > 0:
-      pos += "latitude1=" + str(latitude1) + "&longitude1=" + str(longitude1)
+      pos += "latitude1=" + "{:.6f}".format(latitude1) + "&longitude1=" + "{:.6f}".format(longitude1)
    if latitude2 > 0:
       if pos != "?":
          pos += "&"
-      pos += "latitude2=" + str(latitude2) + "&longitude2=" + str(longitude2)
+      pos += "latitude2=" + "{:.6f}".format(latitude2) + "&longitude2=" + "{:.6f}".format(longitude2)
    if pos == "?":
       pos = ""
       

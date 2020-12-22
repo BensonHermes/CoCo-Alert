@@ -102,7 +102,8 @@ def handle_message(event):
     elif RHSMList[user_id].state != 'default' or msg in RHCommands:
         message = ReturnHomeSetting(event, RHSMList[user_id])
     else:   # default
-        message = TextSendMessage(text=msg)
+        return
+        # message = TextSendMessage(text=msg)
 
     line_bot_api.reply_message(event.reply_token, message)
 
