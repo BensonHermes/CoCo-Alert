@@ -115,7 +115,7 @@ def handle_location(event):
         message = TextSendMessage(text=note)
     elif GWSMList[user_id].state != 'default':
         # message = TextSendMessage(text=GetWarn(event))
-        message = GetWarn(event)
+        message = GetWarn(event, GWSMList[user_id])
         GWSMList[user_id].reset()
     else:
         return

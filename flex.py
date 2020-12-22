@@ -1,4 +1,15 @@
-def getWarnMapFlex():
+def getWarnMapFlex(latitude1, longitude1, latitude2, longitude2):
+   pos = "?"
+   if latitude1 > 0:
+      pos += "latitude1=" + latitude1 + "&longitude1=" + longitude1
+   if longitude1 > 0:
+      if pos != "?":
+         pos += &
+      pos += "latitude2=" + latitude2 + "&longitude2=" + longitude2
+   if pos == "?":
+      pos = ""
+      
+   
    return {
       "type": "bubble",
       "body": {
@@ -41,7 +52,7 @@ def getWarnMapFlex():
                "action": {
                   "type": "uri",
                   "label": "打開地圖",
-                  "uri": "https://TeresaChou.github.io/WarnMap/"
+                  "uri": "https://TeresaChou.github.io/WarnMap/index.html" + pos
                }
             }
             # {

@@ -2,10 +2,12 @@ from linebot.models import FlexSendMessage
 from transitions import Machine
 from flex import *
 
-def GetWarn(event):
+def GetWarn(event, GWSM):
+    latitude = event.message.latitude
+    longitude = event.message.longitude
     message = FlexSendMessage(
         alt_text = '警示地點查詢結果',
-        contents = getWarnMapFlex()
+        contents = getWarnMapFlex(latitude, longitude)
     )
     return message
 
@@ -14,6 +16,8 @@ class GetWarnStateMachine(object):
     states = ['default', 'locate']
 
     def __init__(self):
+
+        self.start_location = {}
         self.machine = Machine(model=self, states=GetWarnStateMachine.states, initial='default')
 
         # add_transition(trigger, source, dest)
