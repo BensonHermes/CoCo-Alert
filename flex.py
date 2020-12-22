@@ -4,7 +4,7 @@ def getWarnMapFlex(latitude1, longitude1, latitude2, longitude2):
       pos += "latitude1=" + latitude1 + "&longitude1=" + longitude1
    if longitude1 > 0:
       if pos != "?":
-         pos += &
+         pos += "&"
       pos += "latitude2=" + latitude2 + "&longitude2=" + longitude2
    if pos == "?":
       pos = ""
