@@ -10,12 +10,12 @@ def GetWarn(event, GWSM):
     latitude = event.message.latitude
     longitude = event.message.longitude
 
-    text = "在回家的路上可能會經過的危險地點如下：\n"
+    text = "在回家的路上會經過的求助地點如下：\n"
     res = getWarnPlaceInRange(latitude, longitude, lat2, long2)
     num = 1
     for (DeptNm, BranchNm, Address, Contact) in res:
         place = DeptNm + BranchNm
-        text += "%d:\n地點: %s\n地址: %s\n聯絡人:  %s" % (num, place, Address, Contact))
+        text += "%d:\n地點: %s\n地址: %s\n聯絡人:  %s" % (num, place, Address, Contact)
         num += 1
 
     message = FlexSendMessage(
