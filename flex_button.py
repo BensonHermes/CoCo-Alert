@@ -19,6 +19,7 @@ def getWarnMapFlex(text, latitude1, longitude1, latitude2, longitude2):
             {
                "type": "text",
                "text": "在回家的路上會經過的危險地點如下：",
+               "wrap": True,
                "size": "lg"
             },
             {
