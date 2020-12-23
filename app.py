@@ -124,7 +124,7 @@ def handle_location(event):
         if locate:
             message = TextSendMessage(text=note, quick_reply=chooseLocationButton())
         else:
-        message = TextSendMessage(text=note)
+            message = TextSendMessage(text=note)
     elif GWSMList[user_id].state != 'default':
         # message = TextSendMessage(text=GetWarn(event))
         message = GetWarn(event, GWSMList[user_id])
