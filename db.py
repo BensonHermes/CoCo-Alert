@@ -35,7 +35,6 @@ def doSQL(order, sqlStatement, data):
             print("資料庫連線已關閉")
 
 def getWarnPlaceInRange(lat1, long1, lat2, long2):
-   # statement = f"SELECT DeptNm, BranchNm, Address, Contact FROM Location WHERE Longitude > {long1} AND Longitude < {long2} AND Latitude > {la1} AND Latitude < {la2};"
-   statement = f"SELECT DeptNm, BranchNm, Address, Contact FROM Location WHERE Longitude > {lat1} AND Longitude < {lat2} AND Latitude > {long1} AND Latitude < {long2};"
+   statement = f"SELECT DeptNm, BranchNm, Address, Contact FROM Location WHERE Longitude > {long1} AND Longitude < {long2} AND Latitude > {la1} AND Latitude < {la2};"
    res = doSQL(0, statement, None)
    return res

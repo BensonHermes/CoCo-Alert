@@ -17,10 +17,14 @@ def getWarnMapFlex(text, latitude1, longitude1, latitude2, longitude2):
          "layout": "vertical",
          "contents": [
             {
+               "type": "text",
+               "text": "在回家的路上會經過的危險地點如下：",
+               "size": "lg"
+            },
+            {
                "type": "box",
                "layout": "vertical",
                "margin": "lg",
-               "spacing": "sm",
                "contents": [
                   {
                      "type": "box",
@@ -31,7 +35,7 @@ def getWarnMapFlex(text, latitude1, longitude1, latitude2, longitude2):
                            "type": "text",
                            "text": text,
                            "wrap": True,
-                           "color": "#000000",
+                           "color": "#666666",
                            "flex": 5
                         }
                      ]
