@@ -108,6 +108,7 @@ def handle_message(event):
         note = BasicInfoSetting(event, BISMList[user_id])
         print(BISMList[user_id].state)
         if BISMList[user_id].state == 'home' or BISMList[user_id].state == 'all_home':
+            print('here')
             message = TextSendMessage(text=note, quick_reply=chooseLocationButton())
         else:
             message = TextSendMessage(text=note)
