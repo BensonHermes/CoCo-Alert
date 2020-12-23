@@ -119,7 +119,7 @@ def handle_location(event):
     user_id = event.source.user_id
     message = ""
     if BISMList[user_id].state != 'default':
-        note = BasicInfoSetting(event, BISMList[user_id])
+        note, locate = BasicInfoSetting(event, BISMList[user_id])
         # if locate:
         #     message = TextSendMessage(text=note, quick_reply=chooseLocationButton())
         # else:

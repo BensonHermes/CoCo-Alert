@@ -92,7 +92,7 @@ def BasicInfoSetting(event, BISM):
                 return getCurrentSetting(event.source.user_id)
             elif '設定用戶ID' in msg:
                 BISM.setting_id()
-                return "請輸入用戶ID"
+                return ("請輸入用戶ID", False)
             elif '設定住家地址' in msg:
                 BISM.setting_home()
                 return TextSendMessage(
