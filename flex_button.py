@@ -1,4 +1,4 @@
-def getWarnMapFlex(latitude1, longitude1, latitude2, longitude2):
+def getWarnMapFlex(text, latitude1, longitude1, latitude2, longitude2):
    pos = "?"
    if latitude1 > 0:
       pos += "latitude1=" + "{:.6f}".format(latitude1) + "&longitude1=" + "{:.6f}".format(longitude1)
@@ -29,7 +29,7 @@ def getWarnMapFlex(latitude1, longitude1, latitude2, longitude2):
                      "contents": [
                         {
                            "type": "text",
-                           "text": "在回家的路上可能會經過的危險地點如下：",
+                           "text": text,
                            "wrap": True,
                            "color": "#000000",
                            "flex": 5

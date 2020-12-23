@@ -124,6 +124,16 @@ def BasicInfoSetting(event, BISM):
     BISM.reset()
     return "無法辨識"
 
+def getCurrentSetting(user_id):
+   result = ''
+
+   result += '用戶ID：'
+   result += '\n住家位置：'
+   result += '\n常用位置：'
+   result += '\n緊急聯絡人：'
+
+   return result
+
 class BasicInfoStateMachine(object):
 
     states = ['default', 'id', 'home', 'contact', 'all_id', 'all_home', 'all_often']
