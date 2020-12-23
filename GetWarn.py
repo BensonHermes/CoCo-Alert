@@ -14,12 +14,12 @@ def GetWarn(event, GWSM):
     long1 = min(longitude, nccu_long) - 0.002
     long2 = max(longitude, nccu_long) + 0.002
 
-    text = "在回家的路上會經過的求助地點如下：\n"
+    text = "在回家的路上會經過的危險地點如下：\n"
     res = getWarnPlaceInRange(lat1, long1, lat2, long2)
     num = 1
     for (DeptNm, BranchNm, Address, Contact) in res:
         place = DeptNm + BranchNm
-        text += "%d:\n地點: %s\n地址: %s\n聯絡人:  %s" % (num, place, Address, Contact)
+        text += "%d:\n危險地點: %s\n所屬轄區: %s\n轄區聯絡人:  %s" % (num, Address, place, Contact)
         num += 1
 
     message = FlexSendMessage(
