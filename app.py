@@ -24,6 +24,7 @@ from message import *
 from BasicInfoSetting import *
 from GetWarn import *
 from ReturnHome import *
+from flex_button import *
 
 
 app = Flask(__name__)
@@ -104,9 +105,8 @@ def handle_message(event):
         RHSMList[user_id].set_time()
         message = SetReturnHomeTime()
     elif BISMList[user_id].state != 'default' or msg in BICommands:
-        locate = False
-        note = BasicInfoSetting(event, BISMList[user_id], locate)
-        if locate:
+        note = BasicInfoSetting(event, BISMList[user_id])
+        if BISMList[user_id].state == 'home' or BISMList[user_id].state == 'all_home':
             message = TextSendMessage(text=note, quick_reply=chooseLocationButton())
         else:
             message = TextSendMessage(text=note)
@@ -123,8 +123,7 @@ def handle_location(event):
     user_id = event.source.user_id
     message = ""
     if BISMList[user_id].state != 'default':
-        locate = False
-        note = BasicInfoSetting(event, BISMList[user_id], locate)
+        note = BasicInfoSetting(event, BISMList[user_id])
         message = TextSendMessage(text=note)
     elif GWSMList[user_id].state != 'default':
         # message = TextSendMessage(text=GetWarn(event))

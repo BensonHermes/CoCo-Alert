@@ -79,7 +79,7 @@ def BasicInfoSettingEntrance():
     )
     return message
 
-def BasicInfoSetting(event, BISM, locate):
+def BasicInfoSetting(event, BISM):
     # print("user id", event.source.user_id)
     # print("message type", event.message.type)
     if event.message.type == 'text':
@@ -95,7 +95,6 @@ def BasicInfoSetting(event, BISM, locate):
                 return "請輸入用戶ID"
             elif '設定住家地址' in msg:
                 BISM.setting_home()
-                locate = True
                 return "請點選下方的按鈕，輸入住家位置",
             # elif '設定常用地點' in msg:
             #     BISM.setting_often()
@@ -108,15 +107,14 @@ def BasicInfoSetting(event, BISM, locate):
             return "設定完成"
         elif BISM.state == 'all_id':
             BISM.all_setting_home()
-            locate = True
             return "住家設置：請點選下方的按鈕，輸入住家位置"
     elif event.message.type == 'location':
         if BISM.state == 'home':
             BISM.reset()
             return "設定完成"
-        elif BISM.state == 'often':
-            BISM.reset()
-            return "設定完成"
+        # elif BISM.state == 'often':
+        #     BISM.reset()
+        #     return "設定完成"
         elif BISM.state == 'all_home':
             # BISM.all_setting_often()
             # return "常用地點設置：請利用左下方的選單，輸入常用地點位置"
