@@ -90,7 +90,7 @@ def handle_message(event):
     elif '查詢警示地點' in msg:
         # resetAllMachine(user_id)
         GWSMList[user_id].locate()
-        note = '請利用下方的按鈕傳送要查詢的位置'
+        note = '請點選下方的按鈕，選擇要查詢的位置'
         message = TextSendMessage(
             text = note,
             quick_reply = chooseLocationButton()
