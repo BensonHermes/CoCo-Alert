@@ -104,8 +104,12 @@ def handle_message(event):
         RHSMList[user_id].set_time()
         message = SetReturnHomeTime()
     elif BISMList[user_id].state != 'default' or msg in BICommands:
-        note = BasicInfoSetting(event, BISMList[user_id])
-        message = TextSendMessage(text=note)
+        locate = False
+        note = BasicInfoSetting(event, BISMList[user_id], locate)
+        if locate:
+            message = TextSendMessage(text=note, quick_reply=chooseLocationButton())
+        else:
+            message = TextSendMessage(text=note)
     elif RHSMList[user_id].state != 'default' or msg in RHCommands:
         message = ReturnHomeSetting(event, RHSMList[user_id])
     else:   # default
@@ -121,10 +125,7 @@ def handle_location(event):
     if BISMList[user_id].state != 'default':
         locate = False
         note = BasicInfoSetting(event, BISMList[user_id], locate)
-        if locate:
-            message = TextSendMessage(text=note, quick_reply=chooseLocationButton())
-        else:
-            message = TextSendMessage(text=note)
+        message = TextSendMessage(text=note)
     elif GWSMList[user_id].state != 'default':
         # message = TextSendMessage(text=GetWarn(event))
         message = GetWarn(event, GWSMList[user_id])
