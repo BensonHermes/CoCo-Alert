@@ -82,33 +82,29 @@ def BasicInfoSettingEntrance():
 def BasicInfoSetting(event, BISM):
     # print("user id", event.source.user_id)
     # print("message type", event.message.type)
-    note = ''
     if event.message.type == 'text':
         msg = event.message.text
         if BISM.state == 'default':
             if '全部重新設定' in msg:
                 BISM.all_setting_id()
-                note = "用戶ID設置：請輸入用戶ID"
+                return ("用戶ID設置：請輸入用戶ID", False)
             elif '查看目前設定' in msg:
-                note = getCurrentSetting(event.source.user_id)
+                return (getCurrentSetting(event.source.user_id), False)
             elif '設定用戶ID' in msg:
                 BISM.setting_id()
-                note = "請輸入用戶ID"
+                return ("請輸入用戶ID", False)
             elif '設定住家地址' in msg:
                 BISM.setting_home()
-                return TextSendMessage(
-                    text = "請點選下方的按鈕，輸入住家位置",
-                    quick_reply = chooseLocationButton()
-                )
+                return ("請點選下方的按鈕，輸入住家位置", True)
             # elif '設定常用地點' in msg:
             #     BISM.setting_often()
             #     return "請利用左下方的選單，輸入常用地點位置"
             elif '設定緊急聯絡人' in msg:
                 BISM.setting_contact()
-                note = "請輸入緊急連絡人ID"
+                return "請輸入緊急連絡人ID"
         elif BISM.state == 'contact':
             BISM.reset()
-            note = "設定完成"
+            return "設定完成"
         elif BISM.state == 'all_id':
             BISM.all_setting_home()
             return TextSendMessage(
@@ -118,16 +114,16 @@ def BasicInfoSetting(event, BISM):
     elif event.message.type == 'location':
         if BISM.state == 'home':
             BISM.reset()
-            note = "設定完成"
+            return "設定完成"
         elif BISM.state == 'often':
             BISM.reset()
-            note = "設定完成"
+            return "設定完成"
         elif BISM.state == 'all_home':
             # BISM.all_setting_often()
             # return "常用地點設置：請利用左下方的選單，輸入常用地點位置"
         # elif BISM.state == 'all_often':
             BISM.setting_contact()
-            note = "緊急聯絡人設置：請輸入緊急聯絡人ID"
+            return "緊急聯絡人設置：請輸入緊急聯絡人ID"
     else:
         BISM.reset()
         return "無法辨識"
