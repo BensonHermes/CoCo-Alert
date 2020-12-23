@@ -92,13 +92,11 @@ def BasicInfoSetting(event, BISM):
                 return getCurrentSetting(event.source.user_id)
             elif '設定用戶ID' in msg:
                 BISM.setting_id()
-                return ("請輸入用戶ID", False)
+                return "請輸入用戶ID"
             elif '設定住家地址' in msg:
                 BISM.setting_home()
-                return TextSendMessage(
-                    text = "請點選下方的按鈕，輸入住家位置",
-                    quick_reply = chooseLocationButton()
-                )
+                locate = True
+                return "請點選下方的按鈕，輸入住家位置",
             # elif '設定常用地點' in msg:
             #     BISM.setting_often()
             #     return "請利用左下方的選單，輸入常用地點位置"
@@ -110,10 +108,8 @@ def BasicInfoSetting(event, BISM):
             return "設定完成"
         elif BISM.state == 'all_id':
             BISM.all_setting_home()
-            return TextSendMessage(
-                text = "住家設置：請點選下方的按鈕，輸入住家位置",
-                quick_reply = chooseLocationButton()
-            )
+            locate = True
+            return "住家設置：請點選下方的按鈕，輸入住家位置"
     elif event.message.type == 'location':
         if BISM.state == 'home':
             BISM.reset()
@@ -127,11 +123,8 @@ def BasicInfoSetting(event, BISM):
         # elif BISM.state == 'all_often':
             BISM.setting_contact()
             return "緊急聯絡人設置：請輸入緊急聯絡人ID"
-    else:
-        BISM.reset()
-        return "無法辨識"
-    
-    return TextSendMessage(text=note)
+    BISM.reset()
+    return "無法辨識"
 
 class BasicInfoStateMachine(object):
 
