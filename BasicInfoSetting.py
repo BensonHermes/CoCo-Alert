@@ -95,9 +95,9 @@ def BasicInfoSetting(event, BISM):
             elif '設定住家地址' in msg:
                 BISM.setting_home()
                 return "請利用左下方的選單，輸入住家位置"
-            elif '設定常用地點' in msg:
-                BISM.setting_often()
-                return "請利用左下方的選單，輸入常用地點位置"
+            # elif '設定常用地點' in msg:
+            #     BISM.setting_often()
+            #     return "請利用左下方的選單，輸入常用地點位置"
             elif '設定緊急聯絡人' in msg:
                 BISM.setting_contact()
                 return "請輸入緊急連絡人ID"
@@ -115,9 +115,9 @@ def BasicInfoSetting(event, BISM):
             BISM.reset()
             return "設定完成"
         elif BISM.state == 'all_home':
-            BISM.all_setting_often()
-            return "常用地點設置：請利用左下方的選單，輸入常用地點位置"
-        elif BISM.state == 'all_often':
+            # BISM.all_setting_often()
+            # return "常用地點設置：請利用左下方的選單，輸入常用地點位置"
+        # elif BISM.state == 'all_often':
             BISM.setting_contact()
             return "緊急聯絡人設置：請輸入緊急聯絡人ID"
     BISM.reset()
@@ -125,7 +125,7 @@ def BasicInfoSetting(event, BISM):
 
 class BasicInfoStateMachine(object):
 
-    states = ['default', 'id', 'home', 'often', 'contact', 'all_id', 'all_home', 'all_often']
+    states = ['default', 'id', 'home', 'contact', 'all_id', 'all_home', 'all_often']
 
     def __init__(self):
         self.machine = Machine(model=self, states=BasicInfoStateMachine.states, initial='default')
@@ -134,7 +134,7 @@ class BasicInfoStateMachine(object):
         self.machine.add_transition('reset', '*', 'default')
         self.machine.add_transition('setting_id', '*', 'id')
         self.machine.add_transition('setting_home', '*', 'home')
-        self.machine.add_transition('setting_often', '*', 'often')
+        # self.machine.add_transition('setting_often', '*', 'often')
         self.machine.add_transition('setting_contact', '*', 'contact')
         self.machine.add_transition('all_setting_id', '*', 'all_id')
         self.machine.add_transition('all_setting_home', 'all_id', 'all_home')

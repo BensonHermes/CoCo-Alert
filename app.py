@@ -88,10 +88,9 @@ def handle_message(event):
         resetAllMachine(user_id)
         message = BasicInfoSettingEntrance()
     elif '查詢警示地點' in msg:
-        resetAllMachine(user_id)
+        # resetAllMachine(user_id)
         GWSMList[user_id].locate()
-        note = '請利用左下方的選單，傳送目前的位置'
-        message = TextSendMessage(text=note)
+        message = chooseLocationFlex('請利用左下方的選單，傳送目前的位置')
     elif '開始回家' in msg:
         resetAllMachine(user_id)
         RHSMList[user_id].set_time()
