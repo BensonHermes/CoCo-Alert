@@ -56,15 +56,15 @@ def BasicInfoSettingEntrance():
                         # )
                     ]
                 ),
-                CarouselColumn(
-                    text='設定常用地點',
-                    actions=[
-                        MessageTemplateAction(
-                            label='點我設定',
-                            text='設定常用地點'
-                        )
-                    ]
-                ),
+                # CarouselColumn(
+                #     text='設定常用地點',
+                #     actions=[
+                #         MessageTemplateAction(
+                #             label='點我設定',
+                #             text='設定常用地點'
+                #         )
+                #     ]
+                # ),
                 CarouselColumn(
                     text='設定緊急聯絡人',
                     actions=[
@@ -102,7 +102,7 @@ def BasicInfoSetting(event, BISM):
             elif '設定緊急聯絡人' in msg:
                 BISM.setting_contact()
                 return "請輸入緊急連絡人ID"
-        elif BISM.state == 'contact':
+        elif BISM.state == 'contact' || BISM.state == 'id':
             BISM.reset()
             return "設定完成"
         elif BISM.state == 'all_id':
@@ -139,4 +139,4 @@ class BasicInfoStateMachine(object):
         self.machine.add_transition('setting_contact', '*', 'contact')
         self.machine.add_transition('all_setting_id', '*', 'all_id')
         self.machine.add_transition('all_setting_home', 'all_id', 'all_home')
-        self.machine.add_transition('all_setting_often', 'all_home', 'all_often')
+        # self.machine.add_transition('all_setting_often', 'all_home', 'all_often')
