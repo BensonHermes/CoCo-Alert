@@ -82,6 +82,7 @@ def BasicInfoSettingEntrance():
 def BasicInfoSetting(event, BISM):
     # print("user id", event.source.user_id)
     # print("message type", event.message.type)
+    note = ''
     if event.message.type == 'text':
         msg = event.message.text
         if BISM.state == 'default':
@@ -89,7 +90,7 @@ def BasicInfoSetting(event, BISM):
                 BISM.all_setting_id()
                 note = "用戶ID設置：請輸入用戶ID"
             elif '查看目前設定' in msg:
-                note = getCurrentSetting()
+                note = getCurrentSetting(event.source.user_id)
             elif '設定用戶ID' in msg:
                 BISM.setting_id()
                 note = "請輸入用戶ID"

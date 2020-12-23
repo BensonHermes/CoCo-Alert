@@ -119,8 +119,8 @@ def handle_location(event):
     user_id = event.source.user_id
     message = ""
     if BISMList[user_id].state != 'default':
-        note = BasicInfoSetting(event, BISMList[user_id])
-        message = TextSendMessage(text=note)
+        message = BasicInfoSetting(event, BISMList[user_id])
+        # message = TextSendMessage(text=note)
     elif GWSMList[user_id].state != 'default':
         # message = TextSendMessage(text=GetWarn(event))
         message = GetWarn(event, GWSMList[user_id])
