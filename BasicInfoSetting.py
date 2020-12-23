@@ -95,7 +95,8 @@ def BasicInfoSetting(event, BISM):
                 return "請輸入用戶ID"
             elif '設定住家地址' in msg:
                 BISM.setting_home()
-                return "請點選下方的按鈕，輸入住家位置",
+                return "住家設置：請點選下方的按鈕，輸入住家位置"
+                # return "請點選下方的按鈕，輸入住家位置",
             # elif '設定常用地點' in msg:
             #     BISM.setting_often()
             #     return "請利用左下方的選單，輸入常用地點位置"
