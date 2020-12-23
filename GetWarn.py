@@ -1,6 +1,6 @@
 from linebot.models import FlexSendMessage
 from transitions import Machine
-from flex import *
+from flex_button import *
 
 def GetWarn(event, GWSM):
     latitude = event.message.latitude
