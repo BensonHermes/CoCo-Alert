@@ -102,7 +102,7 @@ def BasicInfoSetting(event, BISM):
             elif '設定緊急聯絡人' in msg:
                 BISM.setting_contact()
                 return "請輸入緊急連絡人ID"
-        elif BISM.state == 'contact' || BISM.state == 'id':
+        elif BISM.state == 'contact' or BISM.state == 'id':
             BISM.reset()
             return "設定完成"
         elif BISM.state == 'all_id':
