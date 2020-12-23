@@ -64,52 +64,15 @@ def getWarnMapFlex(latitude1, longitude1, latitude2, longitude2):
       }
    }
 
-def chooseLocationFlex(text):
+def chooseLocationButton():
    return {
-      "type": "bubble",
-      "body": {
-         "type": "box",
-         "layout": "vertical",
-         "contents": [
-            {
-               "type": "box",
-               "layout": "vertical",
-               "margin": "lg",
-               "spacing": "sm",
-               "contents": [
-                  {
-                     "type": "box",
-                     "layout": "baseline",
-                     "spacing": "sm",
-                     "contents": [
-                        {
-                           "type": "text",
-                           "text": text,
-                           "wrap": True,
-                           "color": "#000000",
-                           "flex": 5
-                        }
-                     ]
-                  }
-               ]
+      'items': [
+         {
+            'type': 'action',
+            'action': {
+               'type':'location',
+               'label': '按我選擇地點'
             }
-         ]
-      },
-      "footer": {
-         "type": "box",
-         "layout": "vertical",
-         "spacing": "sm",
-         "contents": [
-            {
-               "type": "button",
-               "style": "link",
-               "height": "sm",
-               "action": {
-                  "type": "location",
-                  "label": "打開地圖"
-               }
-            }
-         ],
-         "flex": 0
-      }
+         }
+      ]
    }
