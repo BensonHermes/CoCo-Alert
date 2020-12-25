@@ -47,10 +47,13 @@ def printTime(current, target):
         .format(current.strftime(dateformat), target.strftime(dateformat)))
 
 def ReturnHome(line_bot_api, event, RHSM):
+    user_id = event.source.user_id
+
     # set target time
     target_time = parsetime(event.postback.params['time'])
     target_time = target_time.astimezone(timezone(timedelta(hours=8)))
     RHSM.time = target_time
+
     note = target_time.strftime("預計回家時間：%Y/%m/%d %H:%M")
     message = TextSendMessage(text=note, quick_reply=arriveHomeButton())
     line_bot_api.reply_message(event.reply_token, message)
@@ -67,7 +70,7 @@ def ReturnHome(line_bot_api, event, RHSM):
 
     note = "預計回家時間已到，你到家了嗎？如果一分鐘後還沒到家，我會聯絡你的緊急聯絡人喔！"
     message = TextSendMessage(text=note, quick_reply=arriveHomeButton())
-    line_bot_api.reply_message(event.reply_token, message)
+    line_bot_api.push_message(user_id, message)
     RHSM.warn()
 
     target_time = target_time + timedelta(minutes=5)
@@ -81,7 +84,8 @@ def ReturnHome(line_bot_api, event, RHSM):
         return '歡迎回家:)'
 
     WarnContact()
-    return '呼叫緊急聯絡人'
+    message = TextSendMessage(text='呼叫緊急聯絡人')
+    line_bot_api.push_message(user_id, message)
 
 def WarnContact():
     return
