@@ -1,5 +1,4 @@
 from linebot.models import *
-from linebot import LineBotApi
 from transitions import Machine
 from datetime import datetime, timedelta, timezone
 import time
@@ -47,7 +46,7 @@ def printTime(current, target):
     print("current: {}, target: {}"
         .format(current.strftime(dateformat), target.strftime(dateformat)))
 
-def ReturnHome(event, RHSM):
+def ReturnHome(line_bot_api, event, RHSM):
     # set target time
     target_time = parsetime(event.postback.params['time'])
     target_time = target_time.astimezone(timezone(timedelta(hours=8)))
