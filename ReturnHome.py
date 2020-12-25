@@ -58,7 +58,7 @@ def ReturnHome(line_bot_api, event, RHSM):
 
     current = getNow()
     while RHSM.state == 'counting' and current < target_time:
-        printTime(current, target)
+        printTime(current, target_time)
         time.sleep(10)
         current = getNow()
 
