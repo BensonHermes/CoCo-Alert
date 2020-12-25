@@ -84,8 +84,7 @@ def ReturnHome(line_bot_api, event, RHSM):
         return '歡迎回家:)'
 
     WarnContact()
-    message = TextSendMessage(text='呼叫緊急聯絡人')
-    line_bot_api.push_message(user_id, message)
+    return '呼叫緊急聯絡人'
 
 def WarnContact():
     return
