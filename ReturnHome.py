@@ -101,7 +101,7 @@ class ReturnHomeMachine(object):
         self.machine.add_transition('reset', '*', 'default')
         self.machine.add_transition('set_time', '*', 'set_time')
         self.machine.add_transition('start_counting', 'set_time', 'counting')
-        self.machine.add_transition('warn', 'counting', 'waning')
+        self.machine.add_transition('warn', 'counting', 'warning')
 
 
 # def StartReturnHome():
