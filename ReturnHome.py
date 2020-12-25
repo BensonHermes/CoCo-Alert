@@ -73,7 +73,7 @@ def ReturnHome(line_bot_api, event, RHSM):
     line_bot_api.push_message(user_id, message)
     RHSM.warn()
 
-    target_time = target_time + timedelta(minutes=5)
+    target_time = target_time + timedelta(seconds=30)
     current = getNow()
     while RHSM.state == 'warning' and current < target_time:
         printTime(current, target_time)
