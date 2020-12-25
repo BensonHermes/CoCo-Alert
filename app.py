@@ -146,7 +146,7 @@ def handle_postback(event):
         note = RHSMList[user_id].time.strftime('回家時間：%Y/%m/%d %H:%M')
         message = TextSendMessage(text=note)
         line_bot_api.reply_message(event.reply_token, message)
-    elif RHSMList[user_id].state != 'default' and '行程結束' in event.postback.data:
+    elif RHSMList[user_id].state != 'default' and 'arrive_home' in event.postback.data:
         RHSMList[user_id].reset()
         message = TextSendMessage(text='請稍候...')
         line_bot_api.reply_message(event.reply_token, message)

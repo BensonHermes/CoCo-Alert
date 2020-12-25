@@ -3,42 +3,7 @@ from linebot import LineBotApi
 from transitions import Machine
 from datetime import datetime, timedelta, timezone
 import time
-
-def ReturnHome(event, RHSM):
-    # set target time
-    target_time = parsetime(event.postback.params['time'])
-    target_time = target_time.astimezone(timezone(timedelta(hours=8)))
-    RHSM.time = target_time
-    note = target_time.strftime("回家時間：%Y/%m/%d %H:%M")
-    message = TextSendMessage(text=note)
-    line_bot_api.reply_message(event.reply_token, message)
-    RHSM.start_counting()
-
-    current = getNow()
-    while RHSM.state == 'counting' and current < target_time:
-        time.sleep(10)
-        current = getNow()
-
-    if RHSM.state == 'default':
-        return '回家行程取消'
-
-    RHSM.warn()
-    GiveWarn()
-    if RHSM.state == 'default':
-        return '歡迎回家:)'
-
-    target_time = target_time + timedelta(minutes=5)
-    current = getNow()
-    while RHSM.state == 'warning' and current < target_time:
-        time.sleep(10)
-        current = getNow()
-
-    if RHSM.state == 'default':
-        return '歡迎回家:)'
-
-    WarnContact()
-    return '呼叫緊急聯絡人'
-
+from flex_button import *
 
 def SetReturnHomeTime():
     message = TemplateSendMessage(
@@ -77,6 +42,50 @@ def parsetime(data):
         result = result + timedelta(days=1)
     return result
         
+def printTime(current, target):
+    dateformat = "%Y/%m/%d %H:%M:%S"
+    print("current: {}, target: {}"
+        .format(current.strftime(dateformat), target.strftime(dateformat)))
+
+def ReturnHome(event, RHSM):
+    # set target time
+    target_time = parsetime(event.postback.params['time'])
+    target_time = target_time.astimezone(timezone(timedelta(hours=8)))
+    RHSM.time = target_time
+    note = target_time.strftime("預計回家時間：%Y/%m/%d %H:%M")
+    message = TextSendMessage(text=note, quick_reply=arriveHomeButton())
+    line_bot_api.reply_message(event.reply_token, message)
+    RHSM.start_counting()
+
+    current = getNow()
+    while RHSM.state == 'counting' and current < target_time:
+        printTime(current, target)
+        time.sleep(10)
+        current = getNow()
+
+    if RHSM.state == 'default':
+        return '歡迎回家:)'
+
+    note = "預計回家時間已到，你到家了嗎？如果一分鐘後還沒到家，我會聯絡你的緊急聯絡人喔！"
+    message = TextSendMessage(text=note, quick_reply=arriveHomeButton())
+    line_bot_api.reply_message(event.reply_token, message)
+    RHSM.warn()
+
+    target_time = target_time + timedelta(minutes=5)
+    current = getNow()
+    while RHSM.state == 'warning' and current < target_time:
+        printTime(current, target_time)
+        time.sleep(10)
+        current = getNow()
+
+    if RHSM.state == 'default':
+        return '歡迎回家:)'
+
+    WarnContact()
+    return '呼叫緊急聯絡人'
+
+def WarnContact():
+    return
 
 class ReturnHomeMachine(object):
 

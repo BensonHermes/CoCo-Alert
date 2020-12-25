@@ -81,3 +81,17 @@ def chooseLocationButton():
          }
       ]
    }
+
+def arriveHomeButton():
+   return {
+      'items': [
+         {
+            'type': 'action',
+            'action': {
+               'type':'postback',
+               'label': '到家了/行程取消',
+               'data': 'arrive_home'
+            }
+         }
+      ]
+   }
