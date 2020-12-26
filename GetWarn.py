@@ -21,7 +21,7 @@ def GetWarn(event, GWSM):
         place = DeptNm + BranchNm
         if num > 1:
             text += "\n"
-        text += "%d:\n危險地點: %s\n所屬轄區: %s\n轄區聯絡人:  %s" % (num, Address, place, Contact)
+        text += "危險地點%d: %s\n所屬轄區: %s\n轄區聯絡人:  %s" % (num, Address, place, Contact)
         num += 1
 
     message = FlexSendMessage(
