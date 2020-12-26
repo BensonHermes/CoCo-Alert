@@ -19,6 +19,8 @@ def GetWarn(event, GWSM):
     num = 1
     for (DeptNm, BranchNm, Address, Contact) in res:
         place = DeptNm + BranchNm
+        if num > 1:
+            text += "\n"
         text += "%d:\n危險地點: %s\n所屬轄區: %s\n轄區聯絡人:  %s" % (num, Address, place, Contact)
         num += 1
 
