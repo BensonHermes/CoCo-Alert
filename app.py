@@ -88,6 +88,7 @@ def handle_message(event):
 
     if '基本資料設定' in msg:
         # resetAllMachine(user_id)
+        print("Basic Info Entrance: user", user_id)
         if not exist(user_id):
             newUser(user_id)
         message = BasicInfoSettingEntrance()
