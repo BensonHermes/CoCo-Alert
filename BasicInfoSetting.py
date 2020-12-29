@@ -85,6 +85,7 @@ def setId(id, user_id):
 def BasicInfoSetting(event, BISM):
     # print("user id", event.source.user_id)
     # print("message type", event.message.type)
+    user_id = event.source.user_id
     if event.message.type == 'text':
         msg = event.message.text
         if BISM.state == 'default':
