@@ -90,7 +90,11 @@ def handle_message(event):
         # resetAllMachine(user_id)
         print("Basic Info Entrance: user", user_id)
         if not exist(user_id):
-            newUser(user_id)
+            try:
+                newUser(user_id)
+            except:
+                message = TextSendMessage(text="發生錯誤，請聯絡開發者")
+                line_bot_api.reply_message(event.reply_token, message)
         message = BasicInfoSettingEntrance()
     elif '查詢警示地點' in msg:
         # resetAllMachine(user_id)

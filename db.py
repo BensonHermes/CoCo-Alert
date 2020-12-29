@@ -27,6 +27,7 @@ def doSQL(order, sqlStatement, data):
 
     except Error as e:
         print("資料庫連接失敗：", e)
+        raise
 
     finally:
         if (connection.is_connected()):
@@ -48,7 +49,10 @@ def exist(user_id):
 
 def newUser(user_id):
     data = ("", user_id, "0", "0", "NULL")
-    doSQL(1, "INSERT INTO User VALUES (%s, %s, %s, %s, %s)", data)
+    try:
+        doSQL(1, "INSERT INTO User VALUES (%s, %s, %s, %s, %s)", data)
+    except:
+        raise
     return
 
 # def getUserInfo(user_id):
