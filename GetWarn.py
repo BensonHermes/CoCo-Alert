@@ -3,16 +3,20 @@ from transitions import Machine
 from flex_button import *
 from db import *
 
-nccu_lat = 24.9861694
-nccu_long = 121.5749262
+# nccu_lat = 24.9861694
+# nccu_long = 121.5749262
 
 def GetWarn(event, GWSM):
+    home_info = getHomeInfo(event.source.user_id)[0]
+    home_lat = home_info[1]
+    home_long = home_info[2]
+
     latitude = event.message.latitude
     longitude = event.message.longitude
-    lat1 = min(latitude, nccu_lat) - 0.002
-    lat2 = max(latitude, nccu_lat) + 0.002
-    long1 = min(longitude, nccu_long) - 0.002
-    long2 = max(longitude, nccu_long) + 0.002
+    lat1 = min(latitude, home_lat) - 0.002
+    lat2 = max(latitude, home_lat) + 0.002
+    long1 = min(longitude, home_long) - 0.002
+    long2 = max(longitude, home_long) + 0.002
 
     text = ''
     res = getWarnPlaceInRange(lat1, long1, lat2, long2)

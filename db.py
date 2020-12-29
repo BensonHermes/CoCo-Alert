@@ -63,3 +63,12 @@ def getContactInfo(user_id):
 
 def getHomeInfo(user_id):
     return [("政大", 24.9861694, 121.5749262)]
+
+def setUserName(user_id, name):
+    return True
+
+def setHome(user_id, address, lat, long):
+    return
+
+def setContact(user_id, contact_name):
+    return True

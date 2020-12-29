@@ -105,20 +105,47 @@ def BasicInfoSetting(event, BISM):
             elif '設定緊急聯絡人' in msg:
                 BISM.setting_contact()
                 return "請輸入緊急連絡人名稱"
-        elif BISM.state == 'contact' or BISM.state == 'id':
+        elif BISM.state == 'id':
+            success = setUserName(user_id, msg)
+            if success:
+                BISM.reset()
+                return "設定完成"
+            else:
+                return "此名稱已被使用過，請輸入另外的名稱"
+        elif BISM.state == 'contact': 
+            success = setContact(user_id, msg)
             BISM.reset()
-            return "設定完成"
+            if success:
+                return "設定完成"
+            else: 
+                return "找不到此人。請確認對方已加入機器人好友，並已設定名稱"
         elif BISM.state == 'all_id':
-            BISM.all_setting_home()
-            return "住家設置：請點選下方的按鈕，輸入住家位置"
+            success = setUserName(user_id, msg)
+            if success:
+                BISM.all_setting_home()
+                return "住家設置：請點選下方的按鈕，輸入住家位置"
+            else:
+                return "此名稱已被使用過，請輸入另外的名稱"
     elif event.message.type == 'location':
         if BISM.state == 'home':
+            setHome(
+                user_id,
+                event.message.address,
+                event.message.latitude,
+                event.message.longitude
+                )
             BISM.reset()
             return "設定完成"
         # elif BISM.state == 'often':
         #     BISM.reset()
         #     return "設定完成"
         elif BISM.state == 'all_home':
+            setHome(
+                user_id,
+                event.message.address,
+                event.message.latitude,
+                event.message.longitude
+                )
             # BISM.all_setting_often()
             # return "常用地點設置：請利用左下方的選單，輸入常用地點位置"
         # elif BISM.state == 'all_often':
@@ -130,7 +157,7 @@ def BasicInfoSetting(event, BISM):
 def getCurrentSetting(user_id):
     info = getUserInfo(user_id)
     info = info[0]
-    result = '用戶名稱：' + info[0]
+    result = '(測試用資料：)\n用戶名稱：' + info[0]
     result += '\n住家位置：' + info[1]
     result += '\n緊急聯絡人：' + info[4]
 
