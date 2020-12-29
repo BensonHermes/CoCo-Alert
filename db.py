@@ -41,7 +41,7 @@ def getWarnPlaceInRange(lat1, long1, lat2, long2):
 
 def exist(user_id):
     statement = f"SELECT User_token FROM User WHERE User_token = {user_id}"
-    doSQL(0, statement, None)
+    res = doSQL(0, statement, None)
     if res == []:
         return False
     return True

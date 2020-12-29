@@ -84,9 +84,14 @@ def ReturnHome(line_bot_api, event, RHSM):
         return '歡迎回家:)'
 
     WarnContact()
+    RHSM.reset()
     return '呼叫緊急聯絡人'
 
 def WarnContact():
+    Hsin_id = "U0ed3d02a2d6e794697b114d7977d48aa"
+    note = "阿記到了預計時間還沒回家，請快確認他的人身安全吧！"
+    message = TextSendMessage(text=note)
+    line_bot_api.push_message(Hsin_id, message)
     return
 
 class ReturnHomeMachine(object):
