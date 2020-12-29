@@ -29,11 +29,11 @@ def BasicInfoSettingEntrance():
                     ]
                 ),
                 CarouselColumn(
-                    text='設定用戶ID',
+                    text='設定用戶名稱',
                     actions=[
                         MessageTemplateAction(
                             label='點我設定',
-                            text='設定用戶ID'
+                            text='設定用戶名稱'
                         )
                     ]
                 ),
@@ -79,6 +79,9 @@ def BasicInfoSettingEntrance():
     )
     return message
 
+def setId(id, user_id):
+    return
+
 def BasicInfoSetting(event, BISM):
     # print("user id", event.source.user_id)
     # print("message type", event.message.type)
@@ -87,12 +90,12 @@ def BasicInfoSetting(event, BISM):
         if BISM.state == 'default':
             if '全部重新設定' in msg:
                 BISM.all_setting_id()
-                return "用戶ID設置：請輸入用戶ID"
+                return "用戶名稱設置：請輸入用戶名稱"
             elif '查看目前設定' in msg:
                 return getCurrentSetting(event.source.user_id)
             elif '設定用戶ID' in msg:
                 BISM.setting_id()
-                return "請輸入用戶ID"
+                return "請輸入用戶名稱"
             elif '設定住家地址' in msg:
                 BISM.setting_home()
                 return "請點選下方的按鈕，輸入住家位置"
@@ -101,7 +104,7 @@ def BasicInfoSetting(event, BISM):
             #     return "請利用左下方的選單，輸入常用地點位置"
             elif '設定緊急聯絡人' in msg:
                 BISM.setting_contact()
-                return "請輸入緊急連絡人ID"
+                return "請輸入緊急連絡人名稱"
         elif BISM.state == 'contact' or BISM.state == 'id':
             BISM.reset()
             return "設定完成"
@@ -120,16 +123,15 @@ def BasicInfoSetting(event, BISM):
             # return "常用地點設置：請利用左下方的選單，輸入常用地點位置"
         # elif BISM.state == 'all_often':
             BISM.setting_contact()
-            return "緊急聯絡人設置：請輸入緊急聯絡人ID"
+            return "緊急聯絡人設置：請輸入緊急聯絡人名稱"
     BISM.reset()
     return "無法辨識"
 
 def getCurrentSetting(user_id):
    result = ''
 
-   result += '用戶ID：'
+   result += '用戶名稱：'
    result += '\n住家位置：'
-   result += '\n常用位置：'
    result += '\n緊急聯絡人：'
 
    return result

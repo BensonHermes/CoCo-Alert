@@ -25,6 +25,7 @@ from BasicInfoSetting import *
 from GetWarn import *
 from ReturnHome import *
 from flex_button import *
+from db import *
 
 
 app = Flask(__name__)
@@ -86,7 +87,9 @@ def handle_message(event):
     checkStateMachine(user_id)
 
     if '基本資料設定' in msg:
-        resetAllMachine(user_id)
+        # resetAllMachine(user_id)
+        if not exist(user_id):
+            newUser(user_id)
         message = BasicInfoSettingEntrance()
     elif '查詢警示地點' in msg:
         # resetAllMachine(user_id)
@@ -153,44 +156,6 @@ def handle_postback(event):
         RHSMList[user_id].reset()
         message = TextSendMessage(text='請稍候...')
         line_bot_api.reply_message(event.reply_token, message)
-
-# def doSQL(order: int, sqlStatement: str, data: list)
-#     try:
-#         # 連接 MySQL/MariaDB 資料庫
-#         connection = mysql.connector.connect(
-#             host='140.119.19.73',          # 主機名稱
-#             port='9306',
-#             database='TG06', # 資料庫名稱
-#             user='TG06',        # 帳號
-#             password='i8p3q6')  # 密碼
-        
-#         if connection.is_connected():
-#             print("database version:", connection.get_server_info())
-
-#         # 查詢資料庫
-#         cursor = connection.cursor()
-#         cursor.execute("SELECT DATABASE();")
-#         record = cursor.fetchone()
-#         print("current database:", record)
-#         # if(order==0):
-#         #     cursor.execute(sqlStatement)
-#         # 列出查詢的資料'
-#             # records = cursor.fetchall()
-#             # return records
-#             # for (Course_id, Course_name) in cursor:
-#             #     print("Course_id: %s, Course_name: %s" % (Course_id, Course_name))
-#         # else:
-#         #     cursor.execute(sqlStatement,data)
-#         #     connection.commit()
-
-#     except Error as e:
-#         print("資料庫連接失敗：", e)
-
-#     finally:
-#         if (connection.is_connected()):
-#             cursor.close()
-#             connection.close()
-#             print("資料庫連線已關閉")
 
 
 import os

@@ -38,3 +38,18 @@ def getWarnPlaceInRange(lat1, long1, lat2, long2):
    statement = f"SELECT DeptNm, BranchNm, Address, Contact FROM Location WHERE Longitude > {long1} AND Longitude < {long2} AND Latitude > {lat1} AND Latitude < {lat2};"
    res = doSQL(0, statement, None)
    return res
+
+def exist(user_id):
+    statement = f"SELECT User_token FROM User WHERE User_token = {user_id}"
+    doSQL(0, statement, None)
+    if res == []:
+        return False
+    return True
+
+def newUser(user_id):
+    data = ("", user_id, "0", "0", "NULL")
+    doSQL(1, "INSERT INTO User VALUES (%s, %s, %s, %s, %s)", data)
+    return
+
+# def getUserInfo(user_id):
+#     statement = f"SELECT User_id, Home_address,  FROM User WHERE User_token = {user_id}"

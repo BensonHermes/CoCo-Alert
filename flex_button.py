@@ -91,6 +91,7 @@ def arriveHomeButton():
                'type':'postback',
                'label': '到家了/行程取消',
                'data': 'arrive_home'
+               # 'text': '到家了/行程取消'
             }
          }
       ]
