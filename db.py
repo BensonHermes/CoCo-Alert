@@ -41,19 +41,25 @@ def getWarnPlaceInRange(lat1, long1, lat2, long2):
    return res
 
 def exist(user_id):
-    statement = f'SELECT User_token FROM User WHERE User_token = "{user_id}"'
-    res = doSQL(0, statement, None)
-    if res == []:
-        return False
+    # statement = f'SELECT User_token FROM User WHERE User_token = "{user_id}"'
+    # res = doSQL(0, statement, None)
+    # if res == []:
+    #     return False
     return True
 
 def newUser(user_id):
     data = ("", user_id, "0", "0", "NULL")
-    try:
-        doSQL(1, "INSERT INTO User VALUES (%s, %s, %s, %s, %s)", data)
-    except:
-        raise
+    # try:
+    #     doSQL(1, "INSERT INTO User VALUES (%s, %s, %s, %s, %s)", data)
+    # except:
+    #     raise
     return
 
-# def getUserInfo(user_id):
-#     statement = f"SELECT User_id, Home_address,  FROM User WHERE User_token = {user_id}"
+def getUserInfo(user_id):
+    return [("chouyun", "政大", 24.9861694, 121.5749262, "Hsin")]
+
+def getContactInfo(user_id):
+    return [("Hsin", "U0ed3d02a2d6e794697b114d7977d48aa")]
+
+def getHomeInfo(user_id):
+    return [("政大", 24.9861694, 121.5749262)]

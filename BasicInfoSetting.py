@@ -128,13 +128,13 @@ def BasicInfoSetting(event, BISM):
     return "無法辨識"
 
 def getCurrentSetting(user_id):
-   result = ''
+    info = getUserInfo(user_id)
+    info = info[0]
+    result = '用戶名稱：' + info[0]
+    result += '\n住家位置：' + info[1]
+    result += '\n緊急聯絡人：' + info[4]
 
-   result += '用戶名稱：'
-   result += '\n住家位置：'
-   result += '\n緊急聯絡人：'
-
-   return result
+    return result
 
 class BasicInfoStateMachine(object):
 

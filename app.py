@@ -95,6 +95,7 @@ def handle_message(event):
             except:
                 message = TextSendMessage(text="發生錯誤，請聯絡開發者")
                 line_bot_api.reply_message(event.reply_token, message)
+                return
         message = BasicInfoSettingEntrance()
     elif '查詢警示地點' in msg:
         # resetAllMachine(user_id)
@@ -114,9 +115,7 @@ def handle_message(event):
         message = SetReturnHomeTime()
     elif BISMList[user_id].state != 'default' or msg in BICommands:
         note = BasicInfoSetting(event, BISMList[user_id])
-        # print(BISMList[user_id].state)
         if BISMList[user_id].state == 'home' or BISMList[user_id].state == 'all_home':
-            # print('here')
             message = TextSendMessage(text=note, quick_reply=chooseLocationButton())
         else:
             message = TextSendMessage(text=note)
