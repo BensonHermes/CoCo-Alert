@@ -27,6 +27,9 @@ def GetWarn(event, GWSM):
             text += "\n"
         text += "危險地點%d: %s\n所屬轄區: %s\n轄區聯絡人:  %s" % (num, Address, place, Contact)
         num += 1
+    
+    if text == '':
+        text = "回家的路上不會經過警示地點:)"
 
     message = FlexSendMessage(
         alt_text = '警示地點查詢結果',
