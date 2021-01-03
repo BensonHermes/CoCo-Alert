@@ -158,9 +158,9 @@ def BasicInfoSetting(event, BISM):
 def getCurrentSetting(user_id):
     info = getUserInfo(user_id)
     info = info[0]
-    result = '(測試用資料)\n用戶名稱：' + info[0]
+    result = '用戶名稱：' + info[0]
     result += '\n住家位置：' + info[1]
-    result += '\n緊急聯絡人：' + info[4]
+    result += '\n緊急聯絡人：' + info[2]
 
     return result
 

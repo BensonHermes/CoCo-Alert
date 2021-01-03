@@ -63,7 +63,7 @@ def newUser(user_id):
     return
 
 def getUserInfo(user_id):
-    # return [("chouyun", "政大", 24.9861694, 121.5749262, "Hsin")]
+    # return [("chouyun", "政大", "Hsin")]
     return doSQL(0, f"SELECT User_name, Address, Contact_name FROM User WHERE User_token = '{user_id}'", None)
 
 def getContactInfo(user_id):
