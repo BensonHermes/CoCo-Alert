@@ -94,7 +94,7 @@ def BasicInfoSetting(event, BISM):
                 return "用戶名稱設置：請輸入用戶名稱"
             elif '查看目前設定' in msg:
                 return getCurrentSetting(event.source.user_id)
-            elif '設定用戶ID' in msg:
+            elif '設定用戶名稱' in msg:
                 BISM.setting_id()
                 return "請輸入用戶名稱"
             elif '設定住家地址' in msg:
@@ -158,7 +158,7 @@ def BasicInfoSetting(event, BISM):
 def getCurrentSetting(user_id):
     info = getUserInfo(user_id)
     info = info[0]
-    result = '(測試用資料：)\n用戶名稱：' + info[0]
+    result = '(測試用資料)\n用戶名稱：' + info[0]
     result += '\n住家位置：' + info[1]
     result += '\n緊急聯絡人：' + info[4]
 
