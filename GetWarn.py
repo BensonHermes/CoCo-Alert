@@ -8,8 +8,8 @@ from db import *
 
 def GetWarn(event, GWSM):
     home_info = getHomeInfo(event.source.user_id)[0]
-    home_lat = home_info[1]
-    home_long = home_info[2]
+    home_lat = float(home_info[1])
+    home_long = float(home_info[2])
 
     latitude = event.message.latitude
     longitude = event.message.longitude
