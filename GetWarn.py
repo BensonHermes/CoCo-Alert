@@ -33,7 +33,7 @@ def GetWarn(event, GWSM):
 
     message = FlexSendMessage(
         alt_text = '警示地點查詢結果',
-        contents = getWarnMapFlex(text, latitude, longitude, 0, 0)
+        contents = getWarnMapFlex(text, latitude, longitude, home_lat, home_long)
     )
     return message
 
