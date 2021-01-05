@@ -121,7 +121,6 @@ def handle_message(event):
         # message = TextSendMessage(text=msg)
 
     line_bot_api.reply_message(event.reply_token, message)
-
     if check:
         if not exist(user_id):
             try:
@@ -154,7 +153,7 @@ def handle_postback(event):
         note = ReturnHome(line_bot_api, event, RHSMList[user_id])
         message = TextSendMessage(text=note)
         line_bot_api.push_message(user_id, message)
-    elif RHSMList[user_id].state != 'default' and 'arrive_home' in event.postback.data:
+    elif RHSMList[user_id].state != 'default':
         if 'arrive_home' in event.postback.data:
             RHSMList[user_id].arrived = True
         elif 'cancel_schedule' in event.postback.data:

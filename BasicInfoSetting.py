@@ -170,6 +170,9 @@ class BasicInfoStateMachine(object):
 
     def __init__(self):
         self.machine = Machine(model=self, states=BasicInfoStateMachine.states, initial='default')
+        # self.info = {
+        #     name: 
+        # }
 
         # add_transition(trigger, source, dest)
         self.machine.add_transition('reset', '*', 'default')
