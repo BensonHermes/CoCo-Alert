@@ -75,8 +75,8 @@ def getHomeInfo(user_id):
     return doSQL(0, f"SELECT Address, Home_la, Home_long FROM User WHERE User_token = '{user_id}'", None)
 
 def setUserName(user_id, name):
-    used = doSQL(0, f"SELECT User_name FROM User WHERE User_name = '{name}'", None)
-    if used != []:
+    used = doSQL(0, f"SELECT User_token FROM User WHERE User_name = '{name}'", None)
+    if used != [] and used[0][0] != user_id:
         return False
     doSQL(2, f"UPDATE User SET User_name = '{name}' WHERE User_token = '{user_id}'", None)
     return True

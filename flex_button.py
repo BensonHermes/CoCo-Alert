@@ -89,8 +89,17 @@ def arriveHomeButton():
             'type': 'action',
             'action': {
                'type':'postback',
-               'label': '到家了/行程取消',
+               'label': '到家了',
                'data': 'arrive_home'
+               # 'text': '到家了/行程取消'
+            }
+         },
+         {
+            'type': 'action',
+            'action': {
+               'type':'postback',
+               'label': '行程取消',
+               'data': 'cancel_schedule'
                # 'text': '到家了/行程取消'
             }
          }

@@ -151,15 +151,16 @@ def handle_postback(event):
     if RHSMList[user_id].state == 'set_time':
         # ReturnHome(event, RHSMList[user_id])
         RHSMList[user_id].time = parsetime(event.postback.params['time'])
-        # print(RHSMList[user_id].time)
-        # RHSMList[user_id].start_counting()
-        # note = RHSMList[user_id].time.strftime('回家時間：%Y/%m/%d %H:%M')
-        # message = TextSendMessage(text=note)
-        # line_bot_api.reply_message(event.reply_token, message)
         note = ReturnHome(line_bot_api, event, RHSMList[user_id])
         message = TextSendMessage(text=note)
         line_bot_api.push_message(user_id, message)
     elif RHSMList[user_id].state != 'default' and 'arrive_home' in event.postback.data:
+        if 'arrive_home' in event.postback.data:
+            RHSMList[user_id].arrived = True
+        elif 'cancel_schedule' in event.postback.data:
+            RHSMList[user_id].arrived = False
+        else:
+            return
         RHSMList[user_id].reset()
         message = TextSendMessage(text='請稍候...')
         line_bot_api.reply_message(event.reply_token, message)

@@ -66,7 +66,10 @@ def ReturnHome(line_bot_api, event, RHSM):
         current = getNow()
 
     if RHSM.state == 'default':
-        return '歡迎回家:)'
+        if RHSM.arrived:
+            return '歡迎回家:)'
+        else:
+            return '行程取消'
 
     note = "預計回家時間已到，你到家了嗎？如果一分鐘後還沒到家，我會聯絡你的緊急聯絡人喔！"
     message = TextSendMessage(text=note, quick_reply=arriveHomeButton())
@@ -81,7 +84,10 @@ def ReturnHome(line_bot_api, event, RHSM):
         current = getNow()
 
     if RHSM.state == 'default':
-        return '歡迎回家:)'
+        if RHSM.arrived:
+            return '歡迎回家:)'
+        else:
+            return '行程取消'
 
     contact_info = getContactInfo(user_id)[0]
     # contact_id = "U0ed3d02a2d6e794697b114d7977d48aa"
@@ -99,6 +105,7 @@ class ReturnHomeMachine(object):
     def __init__(self):
         self.machine = Machine(model=self, states=ReturnHomeMachine.states, initial='default')
         self.time = ''
+        self.arrived = False
 
         # add_transition(trigger, source, dest)
         self.machine.add_transition('reset', '*', 'default')
