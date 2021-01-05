@@ -85,17 +85,12 @@ def handle_message(event):
     msg = event.message.text
     user_id = event.source.user_id
     checkStateMachine(user_id)
+    check = False
 
     if '基本資料設定' in msg:
         # resetAllMachine(user_id)
         print("Basic Info Entrance: user", user_id)
-        if not exist(user_id):
-            try:
-                newUser(user_id)
-            except:
-                message = TextSendMessage(text="發生錯誤，請聯絡開發者")
-                line_bot_api.reply_message(event.reply_token, message)
-                return
+        check = True
         message = BasicInfoSettingEntrance()
     elif '查詢警示地點' in msg:
         # resetAllMachine(user_id)
@@ -126,6 +121,14 @@ def handle_message(event):
         # message = TextSendMessage(text=msg)
 
     line_bot_api.reply_message(event.reply_token, message)
+
+    if check:
+        if not exist(user_id):
+            try:
+                newUser(user_id)
+            except:
+                message = TextSendMessage(text="發生錯誤，請聯絡開發者")
+                line_bot_api.reply_message(event.reply_token, message)
 
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location(event):
