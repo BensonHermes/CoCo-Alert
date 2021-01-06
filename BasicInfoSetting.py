@@ -171,7 +171,7 @@ class BasicInfoStateMachine(object):
     def __init__(self):
         self.machine = Machine(model=self, states=BasicInfoStateMachine.states, initial='default')
         self.info = {
-            'cache': False
+            'cache': False,
             'name': '',
             'home_address': '',
             'home_la': 0,
