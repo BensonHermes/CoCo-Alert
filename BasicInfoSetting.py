@@ -11,11 +11,11 @@ def BasicInfoSettingEntrance():
         template=CarouselTemplate(
             columns=[
                 CarouselColumn(
-                    text='全部重新設定',
+                    text='初始資料設定',
                     actions=[
                         MessageTemplateAction(
                             label='點我重新設定',
-                            text='全部重新設定'
+                            text='初始資料設定'
                         )
                     ]
                 ),
@@ -89,7 +89,7 @@ def BasicInfoSetting(event, BISM):
     if event.message.type == 'text':
         msg = event.message.text
         if BISM.state == 'default':
-            if '全部重新設定' in msg:
+            if '初始資料設定' in msg:
                 BISM.all_setting_id()
                 return "用戶名稱設置：請輸入用戶名稱"
             elif '查看目前設定' in msg:
@@ -170,9 +170,15 @@ class BasicInfoStateMachine(object):
 
     def __init__(self):
         self.machine = Machine(model=self, states=BasicInfoStateMachine.states, initial='default')
-        # self.info = {
-        #     name: 
-        # }
+        self.info = {
+            'cache': False
+            'name': '',
+            'home_address': '',
+            'home_la': 0,
+            'home_long': 0,
+            'contact_name': '',
+            'contact_token': ''
+        }
 
         # add_transition(trigger, source, dest)
         self.machine.add_transition('reset', '*', 'default')

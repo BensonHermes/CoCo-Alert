@@ -52,8 +52,8 @@ def callback():
 
 
 BISMList = {}   # the state machine of BasicInfoSetting
-BICommands = [   # commands for basic setting    '全部重新設定',
-    '全部重新設定',
+BICommands = [   # commands for basic setting 
+    '初始資料設定',
     '查看目前設定',
     '設定用戶名稱',
     '設定住家地址',
