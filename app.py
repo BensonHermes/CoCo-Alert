@@ -93,7 +93,7 @@ def checkCache(user_id):
                 float(home_long), 
                 address, 
                 contact_name, 
-                contact_toke
+                contact_token
                 )
     
 # 處理訊息
