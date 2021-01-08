@@ -14,7 +14,7 @@ def BasicInfoSettingEntrance():
                     text='初始資料設定',
                     actions=[
                         MessageTemplateAction(
-                            label='點我重新設定',
+                            label='點我設定',
                             text='初始資料設定'
                         )
                     ]
@@ -93,7 +93,7 @@ def BasicInfoSetting(event, BISM):
                 BISM.all_setting_id()
                 return "用戶名稱設置：請輸入用戶名稱"
             elif '查看目前設定' in msg:
-                return getCurrentSetting(event.source.user_id)
+                return getCurrentSetting(event.source.user_id, BISM)
             elif '設定用戶名稱' in msg:
                 BISM.setting_id()
                 return "請輸入用戶名稱"
@@ -155,9 +155,18 @@ def BasicInfoSetting(event, BISM):
     BISM.reset()
     return "無法辨識"
 
-def getCurrentSetting(user_id):
-    info = getUserInfo(user_id)
-    info = info[0]
+def getCurrentSetting(user_id, BISM):
+    info = []
+    if BISM.info.ready:
+        info = [
+            BISM.info['name'], 
+            BISM.info['home_address'], 
+            BISM.info['contact_name']
+        ]
+    else:
+        info = getUserInfo(user_id)
+        info = info[0]
+
     result = '用戶名稱：' + info[0]
     result += '\n住家位置：' + info[1]
     result += '\n緊急聯絡人：' + info[2]
@@ -171,11 +180,11 @@ class BasicInfoStateMachine(object):
     def __init__(self):
         self.machine = Machine(model=self, states=BasicInfoStateMachine.states, initial='default')
         self.info = {
-            'cache': False,
+            'ready': False,
             'name': '',
-            'home_address': '',
             'home_la': 0,
             'home_long': 0,
+            'home_address': '',
             'contact_name': '',
             'contact_token': ''
         }

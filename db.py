@@ -53,6 +53,10 @@ def exist(user_id):
         return False
     return True
 
+def query(user_id):
+    statement = f'SELECT * FROM User WHERE User_token = "{user_id}"'
+    return doSQL(0, statement, None)
+
 def newUser(user_id):
     # User_name, User_token, Home_la, Home_long, Address, Contact_name, Contact_token
     data = ("", user_id, "0", "0", "", "", "")

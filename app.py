@@ -77,6 +77,25 @@ def checkStateMachine(user_id):
         GWSMList[user_id] = GetWarnStateMachine()
     if user_id not in RHSMList:
         RHSMList[user_id] = ReturnHomeMachine()
+
+def checkCache(user_id):
+    assert(user_id in BISMList)
+    if not BISMList[user_id].info.ready:
+        data = query(user_id) 
+        if data == []:
+            newUser(user_id)
+            BISMList[user_id].info.ready = True
+        else:
+            name, token, home_la, home_long, address, contact_name, contact_token = data[0]
+            BISMList[user_id] = {
+                'ready': True,
+                'name': name,
+                'home_la': home_la,
+                'home_long': home_long,
+                'home_address': address,
+                'contact_name': contact_name,
+                'contact_token': contact_token
+            }
     
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
