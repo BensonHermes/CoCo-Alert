@@ -132,7 +132,7 @@ def BasicInfoSetting(event, BISM):
             else:
                 return "此名稱已被使用過，請輸入另外的名稱"
     elif event.message.type == 'location':
-        if BISM.state == 'home' of BISM.state == 'all_home':
+        if BISM.state == 'home' or BISM.state == 'all_home':
             setHome(
                 user_id,
                 event.message.address,
