@@ -87,15 +87,14 @@ def checkCache(user_id):
             BISMList[user_id].info.ready = True
         else:
             name, token, home_la, home_long, address, contact_name, contact_token = data[0]
-            BISMList[user_id] = {
-                'ready': True,
-                'name': name,
-                'home_la': home_la,
-                'home_long': home_long,
-                'home_address': address,
-                'contact_name': contact_name,
-                'contact_token': contact_token
-            }
+            BISMList[user_id].info.set(
+                name, 
+                float(home_la), 
+                float(home_long), 
+                home_address, 
+                contact_name, 
+                contact_toke
+                )
     
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
@@ -140,13 +139,14 @@ def handle_message(event):
         # message = TextSendMessage(text=msg)
 
     line_bot_api.reply_message(event.reply_token, message)
-    if check:
-        if not exist(user_id):
-            try:
-                newUser(user_id)
-            except:
-                message = TextSendMessage(text="發生錯誤，請聯絡開發者")
-                line_bot_api.reply_message(event.reply_token, message)
+    checkCache(user_id)
+    # if check:
+    #     if not exist(user_id):
+    #         try:
+    #             newUser(user_id)
+    #         except:
+    #             message = TextSendMessage(text="發生錯誤，請聯絡開發者")
+    #             line_bot_api.reply_message(event.reply_token, message)
 
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location(event):
@@ -157,7 +157,7 @@ def handle_location(event):
         message = TextSendMessage(text=note)
     elif GWSMList[user_id].state != 'default':
         # message = TextSendMessage(text=GetWarn(event))
-        message = GetWarn(event, GWSMList[user_id])
+        message = GetWarn(event, BISMList[user_id], GWSMList[user_id])
         GWSMList[user_id].reset()
     else:
         return
@@ -169,7 +169,7 @@ def handle_postback(event):
     if RHSMList[user_id].state == 'set_time':
         # ReturnHome(event, RHSMList[user_id])
         RHSMList[user_id].time = parsetime(event.postback.params['time'])
-        note = ReturnHome(line_bot_api, event, RHSMList[user_id])
+        note = ReturnHome(line_bot_api, event, BISMList[user_id], RHSMList[user_id])
         message = TextSendMessage(text=note)
         line_bot_api.push_message(user_id, message)
     elif RHSMList[user_id].state != 'default':

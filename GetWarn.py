@@ -6,10 +6,16 @@ from db import *
 # nccu_lat = 24.9861694
 # nccu_long = 121.5749262
 
-def GetWarn(event, GWSM):
-    home_info = getHomeInfo(event.source.user_id)[0]
-    home_lat = float(home_info[1])
-    home_long = float(home_info[2])
+def GetWarn(event, BISM, GWSM):
+    home_lat = 0
+    home_long = 0
+    if BISM.info.ready:
+        home_lat = BISM.info.home_la
+        home_long = BISM.info.home_long
+    else:
+        home_info = getHomeInfo(event.source.user_id)[0]
+        home_lat = float(home_info[1])
+        home_long = float(home_info[2])
 
     latitude = event.message.latitude
     longitude = event.message.longitude

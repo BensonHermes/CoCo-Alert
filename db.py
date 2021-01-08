@@ -92,7 +92,7 @@ def setHome(user_id, address, lat, long):
 def setContact(user_id, contact_name):
     token = doSQL(0, f"SELECT User_token FROM User WHERE User_name = '{contact_name}'", None)
     if token == []:
-        return False
+        return (False, token)
     token = token[0][0]
     doSQL(2, f"UPDATE User SET Contact_name = '{contact_name}', Contact_token = '{token}' WHERE User_token = '{user_id}'", None)
-    return True
+    return (True, token)

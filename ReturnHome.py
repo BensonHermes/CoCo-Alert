@@ -46,7 +46,7 @@ def printTime(current, target):
     print("current: {}, target: {}"
         .format(current.strftime(dateformat), target.strftime(dateformat)))
 
-def ReturnHome(line_bot_api, event, RHSM):
+def ReturnHome(line_bot_api, event, BISM, RHSM):
     user_id = event.source.user_id
 
     # set target time
@@ -89,7 +89,11 @@ def ReturnHome(line_bot_api, event, RHSM):
         else:
             return '行程取消'
 
-    contact_info = getContactInfo(user_id)[0]
+    contact_info = []
+    if BISM.info.ready:
+        contact_info = [BISM.info.contact_name, BISM.info.contact_token]
+    else:
+        contact_info = getContactInfo(user_id)[0]
     # contact_id = "U0ed3d02a2d6e794697b114d7977d48aa"
     note = "{}到了預計時間還沒回家，請快確認他的人身安全吧！".format(contact_info[0])
     message = TextSendMessage(text=note)
