@@ -113,7 +113,7 @@ def setAll(user_id, BISM):
     statement = f"UPDATE User Set User_name = '{BISM.info.name}', \
         Address = '{BISM.info.home_address}', \
         Home_la = '{BISM.info.home_la}', \
-        Home_long = '{BISM.info.home_long}, '\
+        Home_long = '{BISM.info.home_long}', \
         Contact_name = '{BISM.info.contact_name}', \
         Contact_token = '{BISM.info.contact_token}' WHERE User_token = '{user_id}'"
     doSQL(2, statement, None)
