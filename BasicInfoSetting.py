@@ -114,7 +114,9 @@ def BasicInfoSetting(event, BISM):
                 return "設定完成"
             else:
                 return "此名稱已被使用過，請輸入另外的名稱"
-        elif BISM.state == 'contact': 
+        elif BISM.state == 'contact' or BISM.state == 'all_contact': 
+            if BISM.state == 'all_contact':
+                BISM.info.need_update = True
             success, token = setContact(user_id, msg)
             BISM.reset()
             if success:
@@ -123,8 +125,9 @@ def BasicInfoSetting(event, BISM):
                 return "設定完成"
             else: 
                 return "找不到此人。請確認對方已加入機器人好友，並已設定名稱"
+
         elif BISM.state == 'all_id':
-            success = setUserName(user_id, msg)
+            success = checkUserName(user_id, msg)
             if success:
                 BISM.info.name = msg
                 BISM.all_setting_home()
@@ -133,20 +136,20 @@ def BasicInfoSetting(event, BISM):
                 return "此名稱已被使用過，請輸入另外的名稱"
     elif event.message.type == 'location':
         if BISM.state == 'home' or BISM.state == 'all_home':
-            setHome(
-                user_id,
-                event.message.address,
-                event.message.latitude,
-                event.message.longitude
-                )
             BISM.info.home_address = event.message.address
             BISM.info.home_la = event.message.latitude
             BISM.info.home_long = event.message.longitude
 
             if BISM.state == 'all_home':
-                BISM.setting_contact()
+                BISM.all_setting_contact()
                 return "緊急聯絡人設置：請輸入緊急聯絡人名稱"
             else:
+                setHome(
+                    user_id,
+                    event.message.address,
+                    event.message.latitude,
+                    event.message.longitude
+                    )
                 BISM.reset()
                 return "設定完成"
     BISM.reset()
@@ -173,6 +176,7 @@ def getCurrentSetting(user_id, BISM):
 class Info:
     def __init__(self):
         self.ready = False
+        self.need_update = False
         self.name = ''
         self.homa_la = 0
         self.home_long = 0
@@ -192,7 +196,7 @@ class Info:
 
 class BasicInfoStateMachine(object):
 
-    states = ['default', 'id', 'home', 'contact', 'all_id', 'all_home', 'all_often']
+    states = ['default', 'id', 'home', 'contact', 'all_id', 'all_home', 'all_contact']
 
     def __init__(self):
         self.machine = Machine(model=self, states=BasicInfoStateMachine.states, initial='default')
@@ -206,4 +210,5 @@ class BasicInfoStateMachine(object):
         self.machine.add_transition('setting_contact', '*', 'contact')
         self.machine.add_transition('all_setting_id', '*', 'all_id')
         self.machine.add_transition('all_setting_home', 'all_id', 'all_home')
+        self.machine.add_transition('all_setting_contact', 'all_home', 'all_contact')
         # self.machine.add_transition('all_setting_often', 'all_home', 'all_often')

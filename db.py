@@ -85,6 +85,12 @@ def setUserName(user_id, name):
     doSQL(2, f"UPDATE User SET User_name = '{name}' WHERE User_token = '{user_id}'", None)
     return True
 
+def checkUserName(user_id, name):
+    used = doSQL(0, f"SELECT User_token FROM User WHERE User_name = '{name}'", None)
+    if used != [] and used[0][0] != user_id:
+        return False
+    return True
+
 def setHome(user_id, address, lat, long):
     doSQL(2, f"UPDATE User SET Address = '{address}', Home_la = '{lat}', Home_long = '{long}' WHERE User_token = '{user_id}'", None)
     return
@@ -96,3 +102,19 @@ def setContact(user_id, contact_name):
     token = token[0][0]
     doSQL(2, f"UPDATE User SET Contact_name = '{contact_name}', Contact_token = '{token}' WHERE User_token = '{user_id}'", None)
     return (True, token)
+
+def checkContact(user_id, contact_name):
+    token = doSQL(0, f"SELECT User_token FROM User WHERE User_name = '{contact_name}'", None)
+    if token == []:
+        return (False, token)
+    return (True, token[0][0])
+
+def setAll(user_id, BISM):
+    statement = f"UPDATE User Set User_name = '{BISM.info.name}', \
+        Address = '{BISM.info.home_address}', \
+        Home_la = '{BISM.info.home_la}', \
+        Home_long = '{BISM.info.home_long}, '\
+        Contact_name = '{BISM.info.contact_name}', \
+        Contact_token = '{BISM.info.contact_token}' WHERE User_token = '{user_id}'"
+    doSQL(2, statement, None)
+    BISM.info.need_update = False
