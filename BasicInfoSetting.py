@@ -114,10 +114,18 @@ def BasicInfoSetting(event, BISM):
                 return "設定完成"
             else:
                 return "此名稱已被使用過，請輸入另外的名稱"
-        elif BISM.state == 'contact' or BISM.state == 'all_contact': 
-            if BISM.state == 'all_contact':
-                BISM.info.need_update = True
+        elif BISM.state == 'contact': 
             success, token = setContact(user_id, msg)
+            BISM.reset()
+            if success:
+                BISM.info.contact_name = msg
+                BISM.info.contact_token = token
+                return "設定完成"
+            else: 
+                return "找不到此人。請確認對方已加入機器人好友，並已設定名稱"
+        elif BISM.state == 'all_contact': 
+            BISM.info.need_update = True
+            success, token = checkContact(user_id, msg)
             BISM.reset()
             if success:
                 BISM.info.contact_name = msg

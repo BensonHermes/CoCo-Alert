@@ -132,6 +132,8 @@ def handle_message(event):
             message = TextSendMessage(text=note, quick_reply=chooseLocationButton())
         else:
             message = TextSendMessage(text=note)
+        if BISMList[user_id].info.need_update:
+            setAll(user_id, BISMList[user_id])
     elif RHSMList[user_id].state != 'default' or msg in RHCommands:
         message = ReturnHomeSetting(event, RHSMList[user_id])
     else:   # default
