@@ -22,12 +22,6 @@ def SetReturnHomeTime():
     )
     return message
 
-def GiveWarn():
-    return
-
-def WarnContact():
-    return
-
 def getNow():
     return datetime.utcnow().astimezone(timezone(timedelta(hours=8)))
 
@@ -52,7 +46,7 @@ def ReturnHome(line_bot_api, event, BISM, RHSM):
     # set target time
     target_time = parsetime(event.postback.params['time'])
     target_time = target_time.astimezone(timezone(timedelta(hours=8)))
-    RHSM.time = target_time
+    # RHSM.time = target_time
 
     note = target_time.strftime("預計回家時間：%Y/%m/%d %H:%M")
     message = TextSendMessage(text=note, quick_reply=arriveHomeButton())
@@ -95,12 +89,60 @@ def ReturnHome(line_bot_api, event, BISM, RHSM):
     else:
         contact_info = getContactInfo(user_id)[0]
     # contact_id = "U0ed3d02a2d6e794697b114d7977d48aa"
-    note = "{}到了預計時間還沒回家，請快確認他的人身安全吧！".format(contact_info[0])
+    note = f"{BISM.info.name}到了預計時間還沒回家，請快確認他的人身安全吧！"
     message = TextSendMessage(text=note)
     line_bot_api.push_message(contact_info[1], message)
 
     RHSM.reset()
-    return '呼叫緊急聯絡人'
+    return '呼叫緊急聯絡人' + contact_info[0]
+
+def Demo(line_bot_api, event, BISM, RHSM):
+    user_id = event.source.user_id
+    note = "你現在正經過較陰暗危險的地點，請務必當心喔！"
+    message = TextSendMessage(text=note, quick_reply=noted_button())
+    line_bot_api.reply_message(event.reply_token, message)
+
+    # set target time
+    RHSM.set_time()
+    target_time = getNow() + timedelta(minutes=3)
+    RHSM.start_counting()
+
+    current = getNow()
+    while RHSM.state == 'counting' and current < target_time:
+        printTime(current, target_time)
+        time.sleep(10)
+        current = getNow()
+
+    if RHSM.state == 'default':
+        return
+
+    note = "你已經身處危險地點超過三分鐘了，如果超過一分鐘後還沒有按下「知道了」按鈕，我就會連絡你的緊急聯絡人"
+    message = TextSendMessage(text=note, quick_reply=noted_button())
+    line_bot_api.push_message(user_id, message)
+    RHSM.warn()
+
+    target_time = target_time + timedelta(seconds=30)
+    current = getNow()
+    while RHSM.state == 'warning' and current < target_time:
+        printTime(current, target_time)
+        time.sleep(10)
+        current = getNow()
+
+    if RHSM.state == 'default':
+        return
+
+    contact_info = []
+    if BISM.info.ready:
+        contact_info = [BISM.info.contact_name, BISM.info.contact_token]
+    else:
+        contact_info = getContactInfo(user_id)[0]
+
+    note = f"{BISM.info.name}在危險地方已經超過五分鐘了，請快確認他的人身安全吧！"
+    message = TextSendMessage(text=note)
+    line_bot_api.push_message(contact_info[1], message)
+
+    RHSM.reset()
+    return '呼叫緊急聯絡人' + contact_info[0]
 
 class ReturnHomeMachine(object):
 
@@ -108,7 +150,7 @@ class ReturnHomeMachine(object):
 
     def __init__(self):
         self.machine = Machine(model=self, states=ReturnHomeMachine.states, initial='default')
-        self.time = ''
+        # self.time = ''
         self.arrived = False
 
         # add_transition(trigger, source, dest)

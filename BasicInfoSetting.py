@@ -82,7 +82,7 @@ def BasicInfoSettingEntrance():
 def setId(id, user_id):
     return
 
-def BasicInfoSetting(event, BISM):
+def BasicInfoSetting(line_bot_api, event, BISM):
     # print("user id", event.source.user_id)
     # print("message type", event.message.type)
     user_id = event.source.user_id
@@ -107,6 +107,9 @@ def BasicInfoSetting(event, BISM):
                 BISM.setting_contact()
                 return "請輸入緊急連絡人名稱"
         elif BISM.state == 'id':
+            message = TextSendMessage(text="檢查名稱中...")
+            line_bot_api.reply_message(event.reply_token, message)
+
             success = setUserName(user_id, msg)
             if success:
                 BISM.info.name = msg
@@ -115,6 +118,9 @@ def BasicInfoSetting(event, BISM):
             else:
                 return "此名稱已被使用過，請輸入另外的名稱"
         elif BISM.state == 'contact': 
+            message = TextSendMessage(text="搜尋中...")
+            line_bot_api.reply_message(event.reply_token, message)
+
             success, token = setContact(user_id, msg)
             BISM.reset()
             if success:
@@ -125,6 +131,9 @@ def BasicInfoSetting(event, BISM):
                 return "找不到此人。請確認對方已加入機器人好友，並已設定名稱"
         elif BISM.state == 'all_contact': 
             BISM.info.need_update = True
+            message = TextSendMessage(text="搜尋中...")
+            line_bot_api.reply_message(event.reply_token, message)
+
             success, token = checkContact(user_id, msg)
             BISM.reset()
             if success:
@@ -135,6 +144,9 @@ def BasicInfoSetting(event, BISM):
                 return "找不到此人。請確認對方已加入機器人好友，並已設定名稱"
 
         elif BISM.state == 'all_id':
+            message = TextSendMessage(text="檢查名稱中...")
+            line_bot_api.reply_message(event.reply_token, message)
+
             success = checkUserName(user_id, msg)
             if success:
                 BISM.info.name = msg

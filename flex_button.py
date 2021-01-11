@@ -105,3 +105,17 @@ def arriveHomeButton():
          }
       ]
    }
+
+def noted_button():
+   return {
+      'items': [
+         {
+            'type': 'action',
+            'action': {
+               'type':'postback',
+               'label': '知道了',
+               'data': 'demo_noted'
+            }
+         }
+      ]
+   }

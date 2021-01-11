@@ -62,8 +62,6 @@ BICommands = [   # commands for basic setting
 ]
 GWSMList = {}   # the state machine of GetWarn
 RHSMList = {}
-RHCommands = [
-]
 
 def resetAllMachine(user_id):
     BISMList[user_id].reset()
@@ -134,8 +132,10 @@ def handle_message(event):
             message = TextSendMessage(text=note)
         if BISMList[user_id].info.need_update:
             setAll(user_id, BISMList[user_id])
-    elif RHSMList[user_id].state != 'default' or msg in RHCommands:
-        message = ReturnHomeSetting(event, RHSMList[user_id])
+    elif 'demo' in msg:
+        Demo(line_bot_api, event, BISMList[user_id], RHSMList[user_id])
+    # elif RHSMList[user_id].state != 'default':
+    #     message = ReturnHomeSetting(event, RHSMList[user_id])
     else:   # default
         return
         # message = TextSendMessage(text=msg)
@@ -155,7 +155,7 @@ def handle_location(event):
     user_id = event.source.user_id
     message = ""
     if BISMList[user_id].state != 'default':
-        note = BasicInfoSetting(event, BISMList[user_id])
+        note = BasicInfoSetting(line_bot_api, event, BISMList[user_id])
         message = TextSendMessage(text=note)
     elif GWSMList[user_id].state != 'default':
         # message = TextSendMessage(text=GetWarn(event))
@@ -175,6 +175,11 @@ def handle_postback(event):
         message = TextSendMessage(text=note)
         line_bot_api.push_message(user_id, message)
     elif RHSMList[user_id].state != 'default':
+        if 'demo_noted' in event.postback.data:
+            RHSMList[user_id].reset()
+            message = TextSendMessage(text='一路小心~')
+            line_bot_api.reply_message(event.reply_token, message)
+            return
         if 'arrive_home' in event.postback.data:
             RHSMList[user_id].arrived = True
         elif 'cancel_schedule' in event.postback.data:
