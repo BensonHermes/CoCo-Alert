@@ -144,12 +144,13 @@ def Demo(line_bot_api, event, BISM, RHSM):
 #     message = TextSendMessage(text=note)
     message = FlexSendMessage(
         alt_text = '緊急聯絡人所在位置',
-        contents = getDemoWarnFlex(contact_info[0])
+        contents = getDemoWarnFlex(BISM.info.name)
     )
     line_bot_api.push_message(contact_info[1], message)
 
     RHSM.reset()
-    return '呼叫緊急聯絡人' + contact_info[0]
+    message = TextSendMessage(text=f'呼叫緊急聯絡人{contact_info[0]}')
+    line_bot_api.push_message(user_id, message)
 
 class ReturnHomeMachine(object):
 
