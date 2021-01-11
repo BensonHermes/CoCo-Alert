@@ -142,7 +142,10 @@ def Demo(line_bot_api, event, BISM, RHSM):
 #     note = f"{BISM.info.name}在危險地方已經超過五分鐘了，請快確認他的人身安全吧！\n\
 # 位置：(24.987556, 121.569168)"
 #     message = TextSendMessage(text=note)
-    message = getDemoWarnFlex(contact_info[0])
+    message = FlexSendMessage(
+        alt_text = '緊急聯絡人所在位置',
+        contents = getDemoWarnFlex(contact_info[0])
+    )
     line_bot_api.push_message(contact_info[1], message)
 
     RHSM.reset()
