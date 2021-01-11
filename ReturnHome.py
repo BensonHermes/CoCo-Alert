@@ -98,8 +98,10 @@ def ReturnHome(line_bot_api, event, BISM, RHSM):
 
 def Demo(line_bot_api, event, BISM, RHSM):
     user_id = event.source.user_id
-    note = "你現在正經過較陰暗危險的地點，請務必當心喔！"
-    message = TextSendMessage(text=note, quick_reply=noted_button())
+    place = "注意！您已來到危險警示地區：指南路一段道南橋下涵洞附近\n\
+        所屬轄區：台北市政府警察局文山第一分局\n\
+        轄區聯絡人：陳警務員、02-27592016、02-27269541"
+    message = TextSendMessage(text=place, quick_reply=noted_button())
     line_bot_api.reply_message(event.reply_token, message)
 
     # set target time
@@ -116,7 +118,7 @@ def Demo(line_bot_api, event, BISM, RHSM):
     if RHSM.state == 'default':
         return
 
-    note = "你已經身處危險地點超過一段時間了，如果超過一分鐘後還沒有按下「知道了」按鈕，我就會連絡你的緊急聯絡人"
+    note = place + "\n\n若未回覆，1分鐘後將會通知緊急連絡人"
     message = TextSendMessage(text=note, quick_reply=noted_button())
     line_bot_api.push_message(user_id, message)
     RHSM.warn()
@@ -137,7 +139,8 @@ def Demo(line_bot_api, event, BISM, RHSM):
     else:
         contact_info = getContactInfo(user_id)[0]
 
-    note = f"{BISM.info.name}在危險地方已經超過五分鐘了，請快確認他的人身安全吧！"
+    note = f"{BISM.info.name}在危險地方已經超過五分鐘了，請快確認他的人身安全吧！\n\
+        位置：(24.987556, 121.569168)"
     message = TextSendMessage(text=note)
     line_bot_api.push_message(contact_info[1], message)
 

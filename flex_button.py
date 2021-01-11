@@ -69,6 +69,48 @@ def getWarnMapFlex(text, latitude1, longitude1, latitude2, longitude2):
       }
    }
 
+def getDemoWarnFlex():
+   text = "危險地點：指南路一段道南橋下涵洞附近\n\
+      所屬轄區：台北市政府警察局文山地基分局\n\
+      轄區聯絡人：陳警務員、02-27592016、02-27269541"
+   return {
+      "type": "bubble",
+      "body": {
+         "type": "box",
+         "layout": "vertical",
+         "contents": [
+            {
+               "type": "text",
+               "text": "你現在正經過以下的危險警示地點，請務必當心喔！",
+               "wrap": True,
+               "size": "lg"
+            },
+            {
+               "type": "box",
+               "layout": "vertical",
+               "margin": "lg",
+               "contents": [
+                  {
+                     "type": "box",
+                     "layout": "baseline",
+                     "spacing": "sm",
+                     "contents": [
+                        {
+                           "type": "text",
+                           "text": text,
+                           "wrap": True,
+                           "color": "#666666",
+                           "flex": 5
+                        }
+                     ]
+                  }
+               ]
+            }
+         ]
+      }
+   }
+
+
 def chooseLocationButton():
    return {
       'items': [

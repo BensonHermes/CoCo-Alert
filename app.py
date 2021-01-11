@@ -132,7 +132,7 @@ def handle_message(event):
             message = TextSendMessage(text=note)
         if BISMList[user_id].info.need_update:
             setAll(user_id, BISMList[user_id])
-    elif 'demo' in msg:
+    elif 'demo' in msg or 'Demo' in msg:
         checkCache(user_id)
         Demo(line_bot_api, event, BISMList[user_id], RHSMList[user_id])
         return
