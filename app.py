@@ -133,7 +133,9 @@ def handle_message(event):
         if BISMList[user_id].info.need_update:
             setAll(user_id, BISMList[user_id])
     elif 'demo' in msg:
+        checkCache(user_id)
         Demo(line_bot_api, event, BISMList[user_id], RHSMList[user_id])
+        return
     # elif RHSMList[user_id].state != 'default':
     #     message = ReturnHomeSetting(event, RHSMList[user_id])
     else:   # default
