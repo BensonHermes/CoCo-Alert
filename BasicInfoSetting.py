@@ -198,7 +198,7 @@ class Info:
         self.ready = False
         self.need_update = False
         self.name = ''
-        self.homa_la = 0
+        self.home_la = 0
         self.home_long = 0
         self.home_address = ''
         self.contact_name = ''
@@ -207,7 +207,7 @@ class Info:
     def set(self, name, home_la, home_long, home_address, contact_name, contact_token):
         self.ready = True
         self.name = name
-        self.homa_la = home_la
+        self.home_la = home_la
         self.home_long = home_long
         self.home_address = home_address
         self.contact_name = contact_name
