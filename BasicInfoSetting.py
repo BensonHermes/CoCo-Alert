@@ -108,7 +108,7 @@ def BasicInfoSetting(line_bot_api, event, BISM):
                 return "請輸入緊急連絡人名稱"
         elif BISM.state == 'id':
             message = TextSendMessage(text="檢查名稱中...")
-            line_bot_api.reply_message(event.reply_token, message)
+            line_bot_api.push_message(user_id, message)
 
             success = setUserName(user_id, msg)
             if success:
@@ -119,7 +119,7 @@ def BasicInfoSetting(line_bot_api, event, BISM):
                 return "此名稱已被使用過，請輸入另外的名稱"
         elif BISM.state == 'contact': 
             message = TextSendMessage(text="搜尋中...")
-            line_bot_api.reply_message(event.reply_token, message)
+            line_bot_api.push_message(user_id, message)
 
             success, token = setContact(user_id, msg)
             BISM.reset()
@@ -132,7 +132,7 @@ def BasicInfoSetting(line_bot_api, event, BISM):
         elif BISM.state == 'all_contact': 
             BISM.info.need_update = True
             message = TextSendMessage(text="搜尋中...")
-            line_bot_api.reply_message(event.reply_token, message)
+            line_bot_api.push_message(user_id, message)
 
             success, token = checkContact(user_id, msg)
             BISM.reset()
@@ -145,7 +145,7 @@ def BasicInfoSetting(line_bot_api, event, BISM):
 
         elif BISM.state == 'all_id':
             message = TextSendMessage(text="檢查名稱中...")
-            line_bot_api.reply_message(event.reply_token, message)
+            line_bot_api.push_message(user_id, message)
 
             success = checkUserName(user_id, msg)
             if success:
