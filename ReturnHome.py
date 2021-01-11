@@ -99,8 +99,8 @@ def ReturnHome(line_bot_api, event, BISM, RHSM):
 def Demo(line_bot_api, event, BISM, RHSM):
     user_id = event.source.user_id
     place = "注意！您已來到危險警示地區：指南路一段道南橋下涵洞附近\n\
-        所屬轄區：台北市政府警察局文山第一分局\n\
-        轄區聯絡人：陳警務員、02-27592016、02-27269541"
+所屬轄區：台北市政府警察局文山第一分局\n\
+轄區聯絡人：陳警務員、02-27592016、02-27269541"
     message = TextSendMessage(text=place, quick_reply=noted_button())
     line_bot_api.reply_message(event.reply_token, message)
 
@@ -140,7 +140,7 @@ def Demo(line_bot_api, event, BISM, RHSM):
         contact_info = getContactInfo(user_id)[0]
 
     note = f"{BISM.info.name}在危險地方已經超過五分鐘了，請快確認他的人身安全吧！\n\
-        位置：(24.987556, 121.569168)"
+位置：(24.987556, 121.569168)"
     message = TextSendMessage(text=note)
     line_bot_api.push_message(contact_info[1], message)
 
