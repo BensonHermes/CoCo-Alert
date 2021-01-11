@@ -3,7 +3,6 @@ from transitions import Machine
 from datetime import datetime, timedelta, timezone
 import time
 from flex_button import *
-from db import *
 
 def SetReturnHomeTime():
     message = TemplateSendMessage(
@@ -117,7 +116,7 @@ def Demo(line_bot_api, event, BISM, RHSM):
     if RHSM.state == 'default':
         return
 
-    note = "你已經身處危險地點超過三分鐘了，如果超過一分鐘後還沒有按下「知道了」按鈕，我就會連絡你的緊急聯絡人"
+    note = "你已經身處危險地點超過一段時間了，如果超過一分鐘後還沒有按下「知道了」按鈕，我就會連絡你的緊急聯絡人"
     message = TextSendMessage(text=note, quick_reply=noted_button())
     line_bot_api.push_message(user_id, message)
     RHSM.warn()

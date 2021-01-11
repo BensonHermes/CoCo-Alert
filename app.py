@@ -125,7 +125,7 @@ def handle_message(event):
         RHSMList[user_id].set_time()
         message = SetReturnHomeTime()
     elif BISMList[user_id].state != 'default' or msg in BICommands:
-        note = BasicInfoSetting(event, BISMList[user_id])
+        note = BasicInfoSetting(line_bot_api, event, BISMList[user_id])
         if BISMList[user_id].state == 'home' or BISMList[user_id].state == 'all_home':
             message = TextSendMessage(text=note, quick_reply=chooseLocationButton())
         else:
